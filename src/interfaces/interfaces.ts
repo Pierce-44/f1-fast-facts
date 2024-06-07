@@ -7,3 +7,23 @@ export interface Driver {
   dateOfBirth: string;
   nationality: string;
 }
+
+export interface DriverResults {
+  id: string;
+  results: [
+    {
+      Results: [
+        {
+          position: string;
+          points: string;
+          grid: string;
+          status: string;
+          Time: {
+            time: string;
+            millis: string;
+          };
+        },
+      ];
+    },
+  ];
+}
