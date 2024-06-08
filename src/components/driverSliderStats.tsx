@@ -1,12 +1,11 @@
 import { fetchDriverRaceResults } from "@/util/fetchDriverRaceResults";
 import DriverSliderClient from "./driverSliderClient";
+import { DriverResults } from "@/interfaces/interfaces";
 
 export default async function DriverSliderStats({
-  driverName,
+  driverResults,
 }: {
-  driverName: string;
+  driverResults: DriverResults | null;
 }) {
-  const driverResults = await fetchDriverRaceResults(driverName);
-
   return <DriverSliderClient driverResults={driverResults} />;
 }

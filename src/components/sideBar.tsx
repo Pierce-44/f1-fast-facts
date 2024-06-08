@@ -9,7 +9,7 @@ export default async function SideBar() {
   const supportedSideBarItems = ["calendar", "news"];
 
   return (
-    <div className="h-full w-[275px] py-4 px-6 border-r border-gray-200">
+    <div className="h-full w-[275px] py-4 px-6 border-r border-gray-200 shrink-0">
       <div className="flex items-center justify-start gap-4 mb-10">
         <Image alt="website logo" src="/ufo.webp" height={36} width={36} />
         <p className="font-semibold text-2xl">F1 Fast Facts</p>

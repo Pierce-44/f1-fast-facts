@@ -9,7 +9,7 @@ const config: Config = {
   theme: {
     extend: {
       boxShadow: {
-        mine: "0px 0px 8px #dddddd",
+        mine: "0px 0px 8px #ebebeb",
       },
     },
   },

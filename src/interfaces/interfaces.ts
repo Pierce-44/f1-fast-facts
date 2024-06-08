@@ -15,12 +15,23 @@ export interface DriverResults {
       Results: [
         {
           position: string;
+          positionText: string;
           points: string;
           grid: string;
           status: string;
           Time: {
             time: string;
             millis: string;
+          };
+          FastestLap: {
+            AverageSpeed: {
+              speed: string;
+            };
+          };
+          Driver: {
+            nationality: string;
+            dateOfBirth: string;
+            permanentNumber: string;
           };
         },
       ];
