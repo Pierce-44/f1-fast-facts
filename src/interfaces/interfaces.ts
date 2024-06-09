@@ -32,9 +32,18 @@ export interface DriverResults {
             nationality: string;
             dateOfBirth: string;
             permanentNumber: string;
+            givenName: string;
+            familyName: string;
+          };
+          Constructor: {
+            constructorId: string;
           };
         },
       ];
+      Circuit: {
+        circuitId: string;
+      };
+      raceName: string;
     },
   ];
 }

@@ -1,4 +1,5 @@
 "use client";
+import { DriverResults } from "@/interfaces/interfaces";
 // components/MyChart.js
 import dynamic from "next/dynamic";
 
@@ -7,13 +8,38 @@ const Chart = dynamic(() => import("react-apexcharts"), {
   ssr: false,
 });
 
-export default function DriveRacePointsChat() {
+export default function DriveRacePointsChat({
+  driverResults,
+}: {
+  driverResults: DriverResults | null;
+}) {
   const series = [
     {
-      name: "series-1",
-      data: [30, 40, 35, 50, 49, 60, 70, 91, 125],
+      name: "Points To Date",
+      data: [] as { x: string; y: number }[],
     },
   ];
+
+  let pointsAcc = 0;
+
+  driverResults?.results.forEach((result) => {
+    const points = Number(result.Results[0].points);
+    const location = result.Circuit.circuitId;
+
+    series[0].data.push({
+      x: location,
+      y: pointsAcc + points,
+    });
+
+    pointsAcc = pointsAcc + points;
+  });
+
+  const driverGivenName = driverResults?.results[0].Results[0].Driver.givenName;
+  const driverFamilyName =
+    driverResults?.results[0].Results[0].Driver.familyName;
+
+  options.title.text = `Championship Points - ${driverGivenName} ${driverFamilyName}`;
+
   return (
     <div className="w-4/6 h-full shrink-0 rounded-md shadow-mine p-4 ">
       <Chart
@@ -32,7 +58,7 @@ const options = {
     id: "basic-bar",
   },
   title: {
-    text: "Championship Points",
+    text: "",
     style: {
       fontSize: "18px",
       color: "#585858",
@@ -40,6 +66,11 @@ const options = {
   },
   subtitle: {
     text: "Points To Date",
+  },
+  grid: {
+    show: true,
+    borderColor: "#e7e7e7",
+    strokeDashArray: 4, // Dash pattern for the background grid lines
   },
   plotOptions: {
     bar: {
@@ -57,7 +88,6 @@ const options = {
   },
   colors: ["#5d87ff", "#247BA0", "#70C1B3"],
   xaxis: {
-    categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep"],
     labels: {
       style: {
         colors: "#9b9b9b",
