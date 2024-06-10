@@ -12,7 +12,7 @@ interface Props {
   teamMateResults: DriverResults | null;
 }
 
-export default function DriverRaceVsTeamMate({
+export default function DriverPointsVsTeamMate({
   driverResults,
   teamMateResults,
 }: Props) {
@@ -25,15 +25,11 @@ export default function DriverRaceVsTeamMate({
   let teamMateTotal = 0;
 
   driverResults?.results.forEach((race, index) => {
-    const driverPosition = race.Results[0].position;
-    const teamMatePosition =
-      teamMateResults?.results[index].Results[0].position;
+    const driverPoints = race.Results[0].points;
+    const teamMatePoints = teamMateResults?.results[index].Results[0].points;
 
-    if (Number(driverPosition) < Number(teamMatePosition)) {
-      driverTotal = driverTotal + 1;
-    } else if (Number(driverPosition) > Number(teamMatePosition)) {
-      teamMateTotal = teamMateTotal + 1;
-    }
+    driverTotal = driverTotal + Number(driverPoints);
+    teamMateTotal = teamMateTotal + Number(teamMatePoints);
   });
 
   const series = [driverTotal, teamMateTotal];
@@ -45,7 +41,7 @@ export default function DriverRaceVsTeamMate({
       enabled: false,
     },
     legend: {
-      show: false, // Disable legends
+      show: false,
     },
     plotOptions: {
       pie: {
@@ -60,8 +56,8 @@ export default function DriverRaceVsTeamMate({
     <div className="w-full h-full rounded-md shadow-mine flex items-center justify-between text-gray-600">
       <div className="h-full w-1/2 flex flex-col justify-start gap-5 ml-2">
         <div className="space-y-2">
-          <p className="pl-4 font-semibold pt-5">Race</p>
-          <p className="pl-4 text-xs text-gray-500">Head to Head</p>
+          <p className="pl-4 font-semibold pt-5">Points</p>
+          <p className="pl-4 text-xs text-gray-500 ">Head to Head</p>
         </div>
         <div className="pl-4 space-y-4 text-gray-500">
           <div className="text-sm flex items-center gap-2">
@@ -92,7 +88,7 @@ export default function DriverRaceVsTeamMate({
           </div>
         </div>
       </div>
-      <div className="h-full w-1/2 pt-6 shrink-0">
+      <div className="h-full w-1/2 pt-6">
         <Chart
           options={options}
           series={series}

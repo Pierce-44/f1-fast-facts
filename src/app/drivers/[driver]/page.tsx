@@ -1,9 +1,15 @@
-import DriverQualyVsTeamMate from "@/components/charts/driverQualyVsTeamMate";
+import DriveQualyResultsChat from "@/components/charts/driverQualyResults";
+import DriverPointsVsTeamMate from "@/components/charts/driverPointsVsTeamMate";
 import DriveRacePointsChat from "@/components/charts/driverRacePoints";
 import DriverRaceVsTeamMate from "@/components/charts/driverRaceVsTeamMate";
 import DriverSliderStats from "@/components/driverSliderStats";
+import { fetchDriverQualyResults } from "@/util/fetchDriverQualyResults";
 import { fetchDriverRaceResults } from "@/util/fetchDriverRaceResults";
 import { fetchTeamData } from "@/util/fetchTeamData";
+import DriverQualyVsTeamMate from "@/components/charts/driverQualyVsTeamMate";
+import DriverBestQualy from "@/components/driverBestQualy";
+import DriverBestRace from "@/components/driverBestRace";
+import DriveRacePositionResults from "@/components/charts/driverRacePositionResults";
 
 export default async function Driver({
   params,
@@ -13,6 +19,7 @@ export default async function Driver({
   const driverName = params.driver.toLocaleLowerCase();
 
   const driverResults = await fetchDriverRaceResults(driverName);
+  const driverQaulyResults = await fetchDriverQualyResults(driverName);
 
   const teamName =
     driverResults?.results[0].Results[0].Constructor.constructorId || "";
@@ -24,23 +31,53 @@ export default async function Driver({
   const teamMateName = driverName1 === driverName ? driverName2 : driverName1;
 
   const teamMateResults = await fetchDriverRaceResults(teamMateName);
+  const teamMateQaulyResults = await fetchDriverQualyResults(teamMateName);
 
   return (
-    <main className="w-full h-full flex flex-col items-center justify-start overflow-x-hidden">
+    <main className="w-full h-full flex flex-col items-center justify-start overflow-x-hidden pb-20">
       <div className="max-w-6xl mt-16 w-full">
         <DriverSliderStats driverResults={driverResults} />
       </div>
-      <div className="h-[450px] w-full px-4 pb-4 pt-6 max-w-6xl flex gap-6">
-        <DriveRacePointsChat driverResults={driverResults} />
+      <div className=" w-full px-4 pb-4 pt-6 max-w-6xl flex gap-6">
+        <DriveRacePointsChat
+          driverResults={driverResults}
+          teamMateResults={teamMateResults}
+        />
         <div className="w-full h-full flex flex-col items-center justify-between gap-6">
           <DriverRaceVsTeamMate
             driverResults={driverResults}
             teamMateResults={teamMateResults}
           />
-          <DriverQualyVsTeamMate
+          <DriverPointsVsTeamMate
             driverResults={driverResults}
             teamMateResults={teamMateResults}
           />
+        </div>
+      </div>
+      <div className=" w-full px-4 pb-4 pt-6 max-w-6xl flex gap-6 flex-row-reverse">
+        <DriveRacePositionResults
+          driverResults={driverResults}
+          teamMateResults={teamMateResults}
+        />
+        <div className="w-full h-full flex flex-col items-center justify-between gap-6">
+          <DriverBestRace />
+          {/* <DriverQualyVsTeamMate
+            driverQaulyResults={driverQaulyResults}
+            teamMateQaulyResults={teamMateQaulyResults}
+          /> */}
+        </div>
+      </div>
+      <div className=" w-full px-4 pb-4 pt-6 max-w-6xl flex gap-6">
+        <DriveQualyResultsChat
+          driverQaulyResults={driverQaulyResults}
+          teamMateQaulyResults={teamMateQaulyResults}
+        />
+        <div className="w-full h-full flex flex-col items-center justify-between gap-6">
+          <DriverQualyVsTeamMate
+            driverQaulyResults={driverQaulyResults}
+            teamMateQaulyResults={teamMateQaulyResults}
+          />
+          <DriverBestQualy />
         </div>
       </div>
     </main>

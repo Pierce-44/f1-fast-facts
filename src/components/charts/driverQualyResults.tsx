@@ -1,5 +1,5 @@
 "use client";
-import { DriverResults } from "@/interfaces/interfaces";
+import { QualyResults } from "@/interfaces/interfaces";
 // components/MyChart.js
 import dynamic from "next/dynamic";
 import React from "react";
@@ -9,20 +9,21 @@ const Chart = dynamic(() => import("react-apexcharts"), {
   ssr: false,
 });
 
-export default function DriveRacePointsChat({
-  driverResults,
-  teamMateResults,
+export default function DriveQualyResultsChat({
+  driverQaulyResults,
+  teamMateQaulyResults,
 }: {
-  driverResults: DriverResults | null;
-  teamMateResults: DriverResults | null;
+  driverQaulyResults: QualyResults | null;
+  teamMateQaulyResults: QualyResults | null;
 }) {
   const [showTeamMate, setShowTeamMate] = React.useState(false);
 
-  const driverGivenName = driverResults?.results[0].Results[0].Driver.givenName;
+  const driverGivenName =
+    driverQaulyResults?.Races[0].QualifyingResults[0].Driver.givenName;
   const driverFamilyName =
-    driverResults?.results[0].Results[0].Driver.familyName;
+    driverQaulyResults?.Races[0].QualifyingResults[0].Driver.familyName;
   const teamMateFamilyName =
-    teamMateResults?.results[0].Results[0].Driver.familyName;
+    teamMateQaulyResults?.Races[0].QualifyingResults[0].Driver.familyName;
 
   const series = [
     {
@@ -42,39 +43,32 @@ export default function DriveRacePointsChat({
     },
   ];
 
-  let driverPointsAcc = 0;
-  let teamMatePointsAcc = 0;
-
-  driverResults?.results.forEach((result) => {
-    const points = Number(result.Results[0].points);
+  driverQaulyResults?.Races.forEach((result) => {
+    const position = Number(result.QualifyingResults[0].position);
     const location = result.Circuit.circuitId;
 
     series[0].data.push({
       x: location,
-      y: driverPointsAcc + points,
+      y: position,
     });
 
     seriesCombined[0].data.push({
       x: location,
-      y: driverPointsAcc + points,
+      y: position,
     });
-
-    driverPointsAcc = driverPointsAcc + points;
   });
 
-  teamMateResults?.results.forEach((result) => {
-    const points = Number(result.Results[0].points);
+  teamMateQaulyResults?.Races.forEach((result) => {
+    const position = Number(result.QualifyingResults[0].position);
     const location = result.Circuit.circuitId;
 
     seriesCombined[1].data.push({
       x: location,
-      y: teamMatePointsAcc + points,
+      y: position,
     });
-
-    teamMatePointsAcc = teamMatePointsAcc + points;
   });
 
-  options.title.text = `Championship Points - ${driverGivenName} ${driverFamilyName}`;
+  options.title.text = `Qualifying Results - ${driverGivenName} ${driverFamilyName}`;
 
   return (
     <div className="w-4/6 h-full shrink-0 rounded-md shadow-mine p-4 ">
@@ -83,7 +77,7 @@ export default function DriveRacePointsChat({
           className="bg-white"
           options={options as any}
           series={showTeamMate ? seriesCombined : series}
-          type="area"
+          type="line"
           height="100%"
           width="100%"
           curve="straight"
@@ -107,7 +101,7 @@ const options = {
     id: "basic-bar",
   },
   stroke: {
-    curve: "straight",
+    curve: "smooth",
   },
   // fill: {
   //   type: "solid",
@@ -126,7 +120,7 @@ const options = {
     },
   },
   subtitle: {
-    text: "Points To Date",
+    text: "Results To Date",
   },
   grid: {
     show: true,
@@ -140,6 +134,8 @@ const options = {
     },
   },
   yaxis: {
+    min: 1,
+    reversed: true,
     labels: {
       style: {
         colors: "#9b9b9b",

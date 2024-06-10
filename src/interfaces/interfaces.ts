@@ -47,3 +47,27 @@ export interface DriverResults {
     },
   ];
 }
+
+export interface QualyResults {
+  id: string;
+  Races: [
+    {
+      QualifyingResults: [
+        {
+          position: string;
+          Driver: {
+            nationality: string;
+            dateOfBirth: string;
+            permanentNumber: string;
+            givenName: string;
+            familyName: string;
+          };
+        },
+      ];
+      Circuit: {
+        circuitId: string;
+      };
+      raceName: string;
+    },
+  ];
+}

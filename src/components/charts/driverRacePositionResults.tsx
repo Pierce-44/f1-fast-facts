@@ -9,7 +9,7 @@ const Chart = dynamic(() => import("react-apexcharts"), {
   ssr: false,
 });
 
-export default function DriveRacePointsChat({
+export default function DriveRacePositionResults({
   driverResults,
   teamMateResults,
 }: {
@@ -42,39 +42,32 @@ export default function DriveRacePointsChat({
     },
   ];
 
-  let driverPointsAcc = 0;
-  let teamMatePointsAcc = 0;
-
   driverResults?.results.forEach((result) => {
-    const points = Number(result.Results[0].points);
+    const position = Number(result.Results[0].position);
     const location = result.Circuit.circuitId;
 
     series[0].data.push({
       x: location,
-      y: driverPointsAcc + points,
+      y: position,
     });
 
     seriesCombined[0].data.push({
       x: location,
-      y: driverPointsAcc + points,
+      y: position,
     });
-
-    driverPointsAcc = driverPointsAcc + points;
   });
 
   teamMateResults?.results.forEach((result) => {
-    const points = Number(result.Results[0].points);
+    const position = Number(result.Results[0].position);
     const location = result.Circuit.circuitId;
 
     seriesCombined[1].data.push({
       x: location,
-      y: teamMatePointsAcc + points,
+      y: position,
     });
-
-    teamMatePointsAcc = teamMatePointsAcc + points;
   });
 
-  options.title.text = `Championship Points - ${driverGivenName} ${driverFamilyName}`;
+  options.title.text = `Race Results - ${driverGivenName} ${driverFamilyName}`;
 
   return (
     <div className="w-4/6 h-full shrink-0 rounded-md shadow-mine p-4 ">
@@ -83,7 +76,7 @@ export default function DriveRacePointsChat({
           className="bg-white"
           options={options as any}
           series={showTeamMate ? seriesCombined : series}
-          type="area"
+          type="line"
           height="100%"
           width="100%"
           curve="straight"
@@ -107,7 +100,16 @@ const options = {
     id: "basic-bar",
   },
   stroke: {
-    curve: "straight",
+    curve: "smooth",
+  },
+  markers: {
+    size: 5, // Size of the points
+    // colors: ["#FF1654", "#247BA0", "#70C1B3"], // Colors of the points
+    // strokeColors: "#fff", // Border color of the points
+    strokeWidth: 2, // Border width of the points
+    hover: {
+      size: 8, // Size of the points on hover
+    },
   },
   // fill: {
   //   type: "solid",
@@ -126,7 +128,7 @@ const options = {
     },
   },
   subtitle: {
-    text: "Points To Date",
+    text: "Results To Date",
   },
   grid: {
     show: true,
@@ -140,6 +142,8 @@ const options = {
     },
   },
   yaxis: {
+    min: 1,
+    reversed: true,
     labels: {
       style: {
         colors: "#9b9b9b",
