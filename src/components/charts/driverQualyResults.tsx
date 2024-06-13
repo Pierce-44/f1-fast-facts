@@ -103,6 +103,15 @@ const options = {
   stroke: {
     curve: "smooth",
   },
+  markers: {
+    size: 5, // Size of the points
+    // colors: ["#FF1654", "#247BA0", "#70C1B3"], // Colors of the points
+    // strokeColors: "#fff", // Border color of the points
+    strokeWidth: 2, // Border width of the points
+    hover: {
+      size: 8, // Size of the points on hover
+    },
+  },
   // fill: {
   //   type: "solid",
   // },
