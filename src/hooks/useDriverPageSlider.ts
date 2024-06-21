@@ -6,6 +6,8 @@ export default function useDriverPageSlider(
 ) {
   if (!driverResults) return null;
 
+  console.log("check", driverResults);
+
   const totalPoints = driverResults?.races.reduce(
     (acc, result) => acc + Number(result.results[0].points),
     0
@@ -22,7 +24,10 @@ export default function useDriverPageSlider(
   );
 
   const speedSum = driverResults?.races.reduce((acc, result) => {
-    if (result.results[0]?.fastestLap?.averageSpeed) {
+    if (
+      result.results[0]?.fastestLap?.averageSpeed &&
+      result.results[0]?.fastestLap?.averageSpeed.speed !== "unknown"
+    ) {
       return acc + Number(result.results[0]?.fastestLap?.averageSpeed.speed);
     } else {
       return acc;
@@ -30,7 +35,10 @@ export default function useDriverPageSlider(
   }, 0);
 
   const speedLength = driverResults?.races.reduce((acc, result) => {
-    if (result.results[0]?.fastestLap?.averageSpeed?.speed) {
+    if (
+      result.results[0]?.fastestLap?.averageSpeed?.speed &&
+      result.results[0]?.fastestLap?.averageSpeed.speed !== "unknown"
+    ) {
       return acc + 1;
     } else {
       return acc;
@@ -61,14 +69,14 @@ export default function useDriverPageSlider(
     },
     {
       title: "Avg Starting",
-      value: averageStartingGrid,
+      value: averageStartingGrid.toFixed(2),
       imgUrl: "/avgStarting.svg",
       textColour: "#60a5fa",
       bgColour: "#eaf0ff",
     },
     {
       title: "Avg Finishing",
-      value: averageFinishing,
+      value: averageFinishing.toFixed(2),
       imgUrl: "/avgFinishing.svg",
       textColour: "#f87171",
       bgColour: "#fdede8",
