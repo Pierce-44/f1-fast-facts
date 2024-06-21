@@ -49,7 +49,7 @@ export default function DriversDropDown({ drivers }: Props) {
             >
               <Link
                 href={`/drivers/${driver.driverId}`}
-                className={`${driver.familyName === params.driver ? "bg-[#eaf0ff] text-[#7296FF]" : "hover:bg-[#eaf0ff] hover:text-[#7296FF]"}  py-2 rounded w-full text-start pl-11 transition-all`}
+                className={`${driver.driverId === params.driver ? "bg-[#eaf0ff] text-[#7296FF]" : "hover:bg-[#eaf0ff] hover:text-[#7296FF]"}  py-2 rounded w-full text-start pl-11 transition-all`}
               >
                 {driver.familyName}
               </Link>
