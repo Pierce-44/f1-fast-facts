@@ -5,7 +5,7 @@ export default function DriverBestRace() {
     <div className="w-full h-full rounded-md shadow-mine text-gray-600 bg-[#5d87ff] space-y-2 p-4 pt-2">
       <p className="text-white font-semibold">Race Stats</p>
       <div className="relative h-[250px] w-[200px] mx-auto">
-        <Image className="py-5" src="/trophy.png" alt="f1 wheel" fill />
+        <Image className="py-5" src="/trophyCartoon.png" alt="f1 wheel" fill />
       </div>
       <div className="bg-white px-4 py-2 rounded-lg">
         <div className="text-sm font-semibold text-gray-500 pt-2 flex items-center">

@@ -1,8 +1,11 @@
 "use client";
 import { DriverResults } from "@/util/fetchDriverRaceResults";
+import { formatString } from "@/util/formateRaceName";
 // components/MyChart.js
 import dynamic from "next/dynamic";
 import React from "react";
+import * as atoms from "@/util/atoms";
+import { useAtom } from "jotai";
 
 // Dynamically import the chart component
 const Chart = dynamic(() => import("react-apexcharts"), {
@@ -16,6 +19,8 @@ export default function DriveRacePointsChat({
   driverResults: DriverResults | null;
   teamMateResults: DriverResults | null;
 }) {
+  const [darkMode] = useAtom(atoms.darkMode);
+
   const [showTeamMate, setShowTeamMate] = React.useState(false);
 
   const driverGivenName = driverResults?.races[0].results[0].driver.givenName;
@@ -54,15 +59,15 @@ export default function DriveRacePointsChat({
     const result = driverResults?.races[index];
 
     const points = Number(result?.results[0].points || 0);
-    // const location = result.Circuit.circuitId;
-    const location = "test" + index;
+    const location = result?.circuit.circuitId || "";
+
     series[0].data.push({
-      x: location,
+      x: formatString(location),
       y: driverPointsAcc + points,
     });
 
     seriesCombined[0].data.push({
-      x: location,
+      x: formatString(location),
       y: driverPointsAcc + points,
     });
 
@@ -73,10 +78,10 @@ export default function DriveRacePointsChat({
     const result = teamMateResults?.races[index];
 
     const points = Number(result?.results[0].points || 0);
-    // const location = result.Circuit.circuitId;
-    const location = "test" + index;
+    const location = result?.circuit.circuitId || "";
+
     seriesCombined[1].data.push({
-      x: location,
+      x: formatString(location),
       y: teamMatePointsAcc + points,
     });
 
@@ -89,7 +94,7 @@ export default function DriveRacePointsChat({
     <div className="w-4/6 h-full shrink-0 rounded-md shadow-mine p-4 ">
       <div className="w-full h-[400px] relative">
         <Chart
-          className="bg-white"
+          className="bg-white dark:bg-dark transition-colors duration-700"
           options={options as any}
           series={showTeamMate ? seriesCombined : series}
           type="area"
@@ -105,7 +110,8 @@ export default function DriveRacePointsChat({
         }}
         className="bg-[#5d87ff] text-white rounded-md px-4 py-2 ml-10 mt-4 hover:bg-[#3e66d3] transition-all"
       >
-        {showTeamMate ? "Without" : "With"} {teamMateFamilyName}
+        {showTeamMate ? "Without Teammate - " : "With Teammate - "}
+        {teamMateFamilyName}
       </button>
     </div>
   );

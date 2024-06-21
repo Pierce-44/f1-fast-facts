@@ -1,5 +1,6 @@
 "use client";
 import { QualyResults } from "@/util/fetchDriverQualyResults";
+import { formatString } from "@/util/formateRaceName";
 // components/MyChart.js
 import dynamic from "next/dynamic";
 import React from "react";
@@ -48,12 +49,12 @@ export default function DriveQualyResultsChat({
     const location = result.circuit.circuitId;
 
     series[0].data.push({
-      x: location,
+      x: formatString(location),
       y: position,
     });
 
     seriesCombined[0].data.push({
-      x: location,
+      x: formatString(location),
       y: position,
     });
   });
@@ -63,7 +64,7 @@ export default function DriveQualyResultsChat({
     const location = result.circuit.circuitId;
 
     seriesCombined[1].data.push({
-      x: location,
+      x: formatString(location),
       y: position,
     });
   });
@@ -71,7 +72,7 @@ export default function DriveQualyResultsChat({
   options.title.text = `Qualifying Results - ${driverGivenName} ${driverFamilyName}`;
 
   return (
-    <div className="w-4/6 h-full shrink-0 rounded-md shadow-mine p-4 ">
+    <div className="w-4/6 h-full shrink-0 rounded-md shadow-mine p-4 flex flex-col items-start gap-10">
       <div className="w-full h-[400px] relative">
         <Chart
           className="bg-white"
@@ -90,7 +91,8 @@ export default function DriveQualyResultsChat({
         }}
         className="bg-[#5d87ff] text-white rounded-md px-4 py-2 ml-10 mt-4 hover:bg-[#3e66d3] transition-all"
       >
-        {showTeamMate ? "Without" : "With"} {teamMateFamilyName}
+        {showTeamMate ? "Without Teammate - " : "With Teammate - "}
+        {teamMateFamilyName}
       </button>
     </div>
   );

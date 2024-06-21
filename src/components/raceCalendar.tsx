@@ -14,7 +14,6 @@ interface Props {
 
 export default function RaceCalendar({ raceCalendar }: Props) {
   // const scrolled = useScrolled();
-  console.log("raceCalendar", raceCalendar);
 
   function handleCodeExceptions(country: string) {
     const code = getCode(country);
@@ -44,18 +43,18 @@ export default function RaceCalendar({ raceCalendar }: Props) {
             <p className="text-xs font-semibold text-gray-500">
               Round: {index + 1}
             </p>
-            {/* <p className="text-sm font-semibold text-gray-800">
-              {race.Circuit.Location.country}
-            </p> */}
+            <p className="text-sm font-semibold text-gray-800">
+              {race.circuit.location.country}
+            </p>
             <p className="text-sm text-gray-500">{race.raceName}</p>
           </div>
-          {/* <Image
+          <Image
             className="rounded-md shadow-mine bg-slate-200 mx-auto"
             width={150}
             height={66}
-            // alt={race.Circuit.Location.country}
-            src={`http://purecatamphetamine.github.io/country-flag-icons/3x2/${handleCodeExceptions(race.Circuit.Location.country)}.svg`}
-          /> */}
+            alt={race.circuit.location.country}
+            src={`http://purecatamphetamine.github.io/country-flag-icons/3x2/${handleCodeExceptions(race.circuit.location.country)}.svg`}
+          />
           <div className="space-y-1">
             <div className="flex justify-between">
               <p className="text-xs font-semibold text-gray-700">Qualifying:</p>

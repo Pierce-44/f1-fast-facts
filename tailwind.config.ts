@@ -10,9 +10,14 @@ const config: Config = {
     extend: {
       boxShadow: {
         mine: "0px 0px 8px #dfdfdf",
+        upperBar: "1.5px 2px 6px #dfdfdf",
+      },
+      backgroundColor: {
+        dark: "#202936",
       },
     },
   },
+  darkMode: "selector",
   plugins: [],
 };
 export default config;

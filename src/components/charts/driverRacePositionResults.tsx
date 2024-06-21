@@ -1,5 +1,6 @@
 "use client";
 import { DriverResults } from "@/util/fetchDriverRaceResults";
+import { formatString } from "@/util/formateRaceName";
 // components/MyChart.js
 import dynamic from "next/dynamic";
 import React from "react";
@@ -51,16 +52,15 @@ export default function DriveRacePositionResults({
     const result = driverResults?.races[index];
 
     const position = Number(result?.results[0].position || 0);
-    // const location = result.Circuit.circuitId || "";
-    const location = "" + index;
+    const location = result?.circuit.circuitId || "";
 
     series[0].data.push({
-      x: location,
+      x: formatString(location),
       y: position,
     });
 
     seriesCombined[0].data.push({
-      x: location,
+      x: formatString(location),
       y: position,
     });
   });
@@ -69,11 +69,10 @@ export default function DriveRacePositionResults({
     const result = teamMateResults?.races[index];
 
     const position = Number(result?.results[0].position || 0);
-    // const location = result.Circuit.circuitId || "";
-    const location = "" + index;
+    const location = result?.circuit.circuitId || "";
 
     seriesCombined[1].data.push({
-      x: location,
+      x: formatString(location),
       y: position,
     });
   });
@@ -100,7 +99,8 @@ export default function DriveRacePositionResults({
         }}
         className="bg-[#5d87ff] text-white rounded-md px-4 py-2 ml-10 mt-4 hover:bg-[#3e66d3] transition-all"
       >
-        {showTeamMate ? "Without" : "With"} {teamMateFamilyName}
+        {showTeamMate ? "Without Teammate - " : "With Teammate - "}
+        {teamMateFamilyName}
       </button>
     </div>
   );

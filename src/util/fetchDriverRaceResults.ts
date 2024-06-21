@@ -27,7 +27,15 @@ export interface DriverResults {
 
 export interface Race {
   id: number;
+  raceName: string;
+  circuit: Circuit;
   results: Result[];
+}
+
+export interface Circuit {
+  id: number;
+  circuitId: string;
+  circuitName: string;
 }
 
 export interface Result {
@@ -65,6 +73,12 @@ export interface Driver {
   permanentNumber: string;
   givenName: string;
   familyName: string;
+}
+
+export interface Constructor {
+  id: number;
+  name: string;
+  constructorId: string;
 }
 
 export interface Constructor {

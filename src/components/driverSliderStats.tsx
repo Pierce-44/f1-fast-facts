@@ -1,7 +1,7 @@
 import { DriverResults } from "@/util/fetchDriverRaceResults";
 import DriverSliderClient from "./driverSliderClient";
 
-export default async function DriverSliderStats({
+export default function DriverSliderStats({
   driverResults,
 }: {
   driverResults: DriverResults | null;
