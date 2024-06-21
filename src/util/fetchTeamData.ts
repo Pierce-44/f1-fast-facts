@@ -1,9 +1,7 @@
-import { DriverResults } from "@/interfaces/interfaces";
-
-export async function fetchTeamData(teamName: string): Promise<any | null> {
+export async function fetchTeamData(): Promise<Team[] | null> {
   try {
     const response = await fetch(
-      `http://localhost:3001/constructors/${teamName}`
+      `https://f1-data-api-d7f25ebaa706.herokuapp.com/teams`
     );
 
     if (!response.ok) {
@@ -17,4 +15,17 @@ export async function fetchTeamData(teamName: string): Promise<any | null> {
     console.error("Failed to fetch team data:", error);
     return null;
   }
+}
+
+export interface Team {
+  id: number;
+  constructorId: string;
+  drivers: Driver[];
+}
+
+export interface Driver {
+  id: number;
+  givenName: string;
+  familyName: string;
+  driverId: string;
 }

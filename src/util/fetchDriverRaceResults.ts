@@ -1,10 +1,10 @@
-import { DriverResults } from "@/interfaces/interfaces";
-
 export async function fetchDriverRaceResults(
   driverName: string
 ): Promise<DriverResults | null> {
   try {
-    const response = await fetch(`http://localhost:3001/results/${driverName}`);
+    const response = await fetch(
+      `https://f1-data-api-d7f25ebaa706.herokuapp.com/drivers/${driverName}/results`
+    );
 
     if (!response.ok) {
       throw new Error(`Error fetching drivers: ${response.statusText}`);
@@ -17,4 +17,58 @@ export async function fetchDriverRaceResults(
     console.error("Failed to fetch driver results:", error);
     return null;
   }
+}
+
+export interface DriverResults {
+  id: number;
+  driverId: string;
+  races: Race[];
+}
+
+export interface Race {
+  id: number;
+  results: Result[];
+}
+
+export interface Result {
+  id: number;
+  position: string;
+  positionText: string;
+  points: string;
+  grid: string;
+  time: Time;
+  fastestLap: FastestLap;
+  driver: Driver;
+  constructor: Constructor;
+}
+
+export interface Time {
+  id: number;
+  time: string;
+  millis: string;
+}
+
+export interface FastestLap {
+  id: number;
+  averageSpeed: AverageSpeed;
+}
+
+export interface AverageSpeed {
+  id: number;
+  speed: string;
+}
+
+export interface Driver {
+  id: number;
+  nationality: string;
+  dateOfBirth: string;
+  permanentNumber: string;
+  givenName: string;
+  familyName: string;
+}
+
+export interface Constructor {
+  id: number;
+  name: string;
+  constructorId: string;
 }

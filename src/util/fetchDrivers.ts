@@ -1,8 +1,8 @@
-import { Driver } from "@/interfaces/interfaces";
-
 export async function fetchDrivers(): Promise<Driver[]> {
   try {
-    const response = await fetch("http://localhost:3001/Drivers");
+    const response = await fetch(
+      "https://f1-data-api-d7f25ebaa706.herokuapp.com/drivers"
+    );
 
     if (!response.ok) {
       throw new Error(`Error fetching drivers: ${response.statusText}`);
@@ -15,4 +15,11 @@ export async function fetchDrivers(): Promise<Driver[]> {
     console.error("Failed to fetch drivers:", error);
     return [];
   }
+}
+
+export interface Driver {
+  id: number;
+  driverId: string;
+  givenName: string;
+  familyName: string;
 }

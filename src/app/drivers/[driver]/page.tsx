@@ -16,22 +16,27 @@ export default async function Driver({
 }: {
   params: { driver: string };
 }) {
-  const driverName = params.driver.toLocaleLowerCase();
+  const driverId = params.driver.toLocaleLowerCase();
 
-  const driverResults = await fetchDriverRaceResults(driverName);
-  const driverQaulyResults = await fetchDriverQualyResults(driverName);
+  const driverResults = await fetchDriverRaceResults(driverId);
+  const driverQaulyResults = await fetchDriverQualyResults(driverId);
 
-  const teamName =
-    driverResults?.results[0].Results[0].Constructor.constructorId || "";
+  const driverName = driverResults?.races[0].results[0].driver.givenName;
+  const teamData = await fetchTeamData();
 
-  const teamData = await fetchTeamData(teamName);
+  const teamInfo =
+    teamData?.filter(
+      (team) =>
+        team.constructorId ===
+        driverResults?.races[0].results[0].constructor.constructorId
+    ) || [];
 
-  const driverName1 = teamData.Drivers[0].driverId;
-  const driverName2 = teamData.Drivers[1].driverId;
-  const teamMateName = driverName1 === driverName ? driverName2 : driverName1;
+  const teamMate = teamInfo[0].drivers.filter(
+    (driver) => driver.givenName !== driverName
+  )[0];
 
-  const teamMateResults = await fetchDriverRaceResults(teamMateName);
-  const teamMateQaulyResults = await fetchDriverQualyResults(teamMateName);
+  const teamMateResults = await fetchDriverRaceResults(teamMate.driverId);
+  const teamMateQaulyResults = await fetchDriverQualyResults(teamMate.driverId);
 
   return (
     <main className="w-full h-full flex flex-col items-center justify-start overflow-x-hidden pb-20">

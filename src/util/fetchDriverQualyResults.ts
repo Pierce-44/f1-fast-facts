@@ -1,11 +1,9 @@
-import { QualyResults } from "@/interfaces/interfaces";
-
 export async function fetchDriverQualyResults(
   driverName: string
 ): Promise<QualyResults | null> {
   try {
     const response = await fetch(
-      `http://localhost:3001/qualifying/${driverName}`
+      `https://f1-data-api-d7f25ebaa706.herokuapp.com/qualyfying/${driverName}/results `
     );
 
     if (!response.ok) {
@@ -19,4 +17,34 @@ export async function fetchDriverQualyResults(
     console.error("Failed to fetch driver results:", error);
     return null;
   }
+}
+
+export interface QualyResults {
+  id: number;
+  driverId: string;
+  races: Race[];
+}
+
+export interface Race {
+  id: number;
+  raceName: string;
+  circuit: Circuit;
+  qualifyingResults: QualifyingResult[];
+}
+
+export interface Circuit {
+  id: number;
+  circuitId: string;
+}
+
+export interface QualifyingResult {
+  id: number;
+  position: string;
+  driver: Driver;
+}
+
+export interface Driver {
+  id: number;
+  givenName: string;
+  familyName: string;
 }

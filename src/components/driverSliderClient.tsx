@@ -1,12 +1,12 @@
 "use client";
 
-import { DriverResults } from "@/interfaces/interfaces";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import { Autoplay } from "swiper/modules";
 import React from "react";
 import Image from "next/image";
 import useDriverPageSlider from "@/hooks/useDriverPageSlider";
+import { DriverResults } from "@/util/fetchDriverRaceResults";
 
 interface Props {
   driverResults: DriverResults | null;

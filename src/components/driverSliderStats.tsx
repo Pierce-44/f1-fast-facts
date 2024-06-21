@@ -1,6 +1,5 @@
-import { fetchDriverRaceResults } from "@/util/fetchDriverRaceResults";
+import { DriverResults } from "@/util/fetchDriverRaceResults";
 import DriverSliderClient from "./driverSliderClient";
-import { DriverResults } from "@/interfaces/interfaces";
 
 export default async function DriverSliderStats({
   driverResults,

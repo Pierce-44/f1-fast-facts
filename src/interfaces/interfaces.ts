@@ -1,13 +1,3 @@
-export interface Driver {
-  driverId: string;
-  permanentNumber: string;
-  code: string;
-  givenName: string;
-  familyName: string;
-  dateOfBirth: string;
-  nationality: string;
-}
-
 export interface DriverResults {
   id: string;
   results: [
@@ -56,9 +46,9 @@ export interface QualyResults {
         {
           position: string;
           Driver: {
-            nationality: string;
-            dateOfBirth: string;
-            permanentNumber: string;
+            // nationality: string;
+            // dateOfBirth: string;
+            // permanentNumber: string;
             givenName: string;
             familyName: string;
           };
@@ -70,65 +60,6 @@ export interface QualyResults {
       raceName: string;
     },
   ];
-}
-
-export interface Calendar {
-  season: string;
-  Races: Race[];
-}
-
-interface Race {
-  season: string;
-  round: string;
-  url: string;
-  raceName: string;
-  Circuit: Circuit;
-  date: string;
-  time: string;
-  FirstPractice: FirstPractice;
-  SecondPractice: SecondPractice;
-  ThirdPractice?: ThirdPractice;
-  Qualifying: Qualifying;
-  Sprint?: Sprint;
-}
-
-interface Circuit {
-  circuitId: string;
-  url: string;
-  circuitName: string;
-  Location: Location;
-}
-
-interface Location {
-  lat: string;
-  long: string;
-  locality: string;
-  country: string;
-}
-
-interface FirstPractice {
-  date: string;
-  time: string;
-}
-
-interface SecondPractice {
-  date: string;
-  time: string;
-}
-
-interface ThirdPractice {
-  date: string;
-  time: string;
-}
-
-interface Qualifying {
-  date: string;
-  time: string;
-}
-
-interface Sprint {
-  date: string;
-  time: string;
 }
 
 export interface News {

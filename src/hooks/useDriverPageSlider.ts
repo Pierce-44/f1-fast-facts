@@ -1,53 +1,53 @@
-import { DriverResults } from "@/interfaces/interfaces";
 import calculateAge from "@/util/calculateAge";
+import { DriverResults } from "@/util/fetchDriverRaceResults";
 
 export default function useDriverPageSlider(
   driverResults: DriverResults | null
 ) {
   if (!driverResults) return null;
 
-  const totalPoints = driverResults?.results.reduce(
-    (acc, result) => acc + Number(result.Results[0].points),
+  const totalPoints = driverResults?.races.reduce(
+    (acc, result) => acc + Number(result.results[0].points),
     0
   );
 
-  const positionSum = driverResults?.results.reduce(
-    (acc, result) => acc + Number(result.Results[0].position),
+  const positionSum = driverResults?.races.reduce(
+    (acc, result) => acc + Number(result.results[0].position),
     0
   );
 
-  const gridSum = driverResults?.results.reduce(
-    (acc, result) => acc + Number(result.Results[0].grid),
+  const gridSum = driverResults?.races.reduce(
+    (acc, result) => acc + Number(result.results[0].grid),
     0
   );
 
-  const speedSum = driverResults?.results.reduce((acc, result) => {
-    if (result.Results[0]?.FastestLap?.AverageSpeed) {
-      return acc + Number(result.Results[0]?.FastestLap?.AverageSpeed.speed);
+  const speedSum = driverResults?.races.reduce((acc, result) => {
+    if (result.results[0]?.fastestLap?.averageSpeed) {
+      return acc + Number(result.results[0]?.fastestLap?.averageSpeed.speed);
     } else {
       return acc;
     }
   }, 0);
 
-  const speedLength = driverResults?.results.reduce((acc, result) => {
-    if (result.Results[0]?.FastestLap?.AverageSpeed?.speed) {
+  const speedLength = driverResults?.races.reduce((acc, result) => {
+    if (result.results[0]?.fastestLap?.averageSpeed?.speed) {
       return acc + 1;
     } else {
       return acc;
     }
   }, 0);
 
-  const racesFinished = driverResults?.results.reduce((acc, result) => {
-    if (result.Results[0]?.position === result.Results[0]?.positionText) {
+  const racesFinished = driverResults?.races.reduce((acc, result) => {
+    if (result.results[0]?.position === result.results[0]?.positionText) {
       return acc + 1;
     } else {
       return acc;
     }
   }, 0);
 
-  const averageFinishing = positionSum / driverResults?.results.length;
+  const averageFinishing = positionSum / driverResults?.races.length;
 
-  const averageStartingGrid = gridSum / driverResults?.results.length;
+  const averageStartingGrid = gridSum / driverResults?.races.length;
 
   const averageSpeed = speedSum / speedLength;
 
@@ -82,30 +82,28 @@ export default function useDriverPageSlider(
     },
     {
       title: "Races Finished",
-      value: `${racesFinished} of ${driverResults?.results.length}`,
+      value: `${racesFinished} of ${driverResults?.races.length}`,
       imgUrl: "/racesFinished.svg",
       textColour: "#f472b6",
       bgColour: "#ffeefd",
     },
     {
       title: "Nationality",
-      value: driverResults.results[0].Results[0].Driver.nationality,
+      value: driverResults.races[0].results[0].driver.nationality,
       imgUrl: "/earth.svg",
       textColour: "#4ade80",
       bgColour: "#e6fffa",
     },
     {
       title: "Age",
-      value: calculateAge(
-        driverResults.results[0].Results[0].Driver.dateOfBirth
-      ),
+      value: calculateAge(driverResults.races[0].results[0].driver.dateOfBirth),
       imgUrl: "/cake.svg",
       textColour: "#60a5fa",
       bgColour: "#eaf0ff",
     },
     {
       title: "Car Number",
-      value: driverResults.results[0].Results[0].Driver.permanentNumber,
+      value: driverResults.races[0].results[0].driver.permanentNumber,
       imgUrl: "/hashtag.svg",
       textColour: "#f472b6",
       bgColour: "#ffeefd",

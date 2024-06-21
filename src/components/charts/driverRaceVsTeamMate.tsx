@@ -1,5 +1,5 @@
 "use client";
-import { DriverResults } from "@/interfaces/interfaces";
+import { DriverResults } from "@/util/fetchDriverRaceResults";
 import dynamic from "next/dynamic";
 
 // Dynamically import the chart component
@@ -16,18 +16,16 @@ export default function DriverRaceVsTeamMate({
   driverResults,
   teamMateResults,
 }: Props) {
-  const driverName =
-    driverResults?.results[0].Results[0].Driver.familyName || "";
+  const driverName = driverResults?.races[0].results[0].driver.familyName || "";
   const teamMateName =
-    teamMateResults?.results[0].Results[0].Driver.familyName || "";
+    teamMateResults?.races[0].results[0].driver.familyName || "";
 
   let driverTotal = 0;
   let teamMateTotal = 0;
 
-  driverResults?.results.forEach((race, index) => {
-    const driverPosition = race.Results[0].position;
-    const teamMatePosition =
-      teamMateResults?.results[index].Results[0].position;
+  driverResults?.races.forEach((race, index) => {
+    const driverPosition = race.results[0].position;
+    const teamMatePosition = teamMateResults?.races[index].results[0].position;
 
     if (Number(driverPosition) < Number(teamMatePosition)) {
       driverTotal = driverTotal + 1;

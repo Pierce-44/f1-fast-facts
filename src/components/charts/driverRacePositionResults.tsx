@@ -1,5 +1,5 @@
 "use client";
-import { DriverResults } from "@/interfaces/interfaces";
+import { DriverResults } from "@/util/fetchDriverRaceResults";
 // components/MyChart.js
 import dynamic from "next/dynamic";
 import React from "react";
@@ -18,11 +18,10 @@ export default function DriveRacePositionResults({
 }) {
   const [showTeamMate, setShowTeamMate] = React.useState(false);
 
-  const driverGivenName = driverResults?.results[0].Results[0].Driver.givenName;
-  const driverFamilyName =
-    driverResults?.results[0].Results[0].Driver.familyName;
+  const driverGivenName = driverResults?.races[0].results[0].driver.givenName;
+  const driverFamilyName = driverResults?.races[0].results[0].driver.familyName;
   const teamMateFamilyName =
-    teamMateResults?.results[0].Results[0].Driver.familyName;
+    teamMateResults?.races[0].results[0].driver.familyName;
 
   const series = [
     {
@@ -42,9 +41,10 @@ export default function DriveRacePositionResults({
     },
   ];
 
-  driverResults?.results.forEach((result) => {
-    const position = Number(result.Results[0].position);
-    const location = result.Circuit.circuitId;
+  driverResults?.races.forEach((result) => {
+    const position = Number(result.results[0].position);
+    // const location = result.Circuit.circuitId || "";
+    const location = "";
 
     series[0].data.push({
       x: location,
@@ -57,9 +57,10 @@ export default function DriveRacePositionResults({
     });
   });
 
-  teamMateResults?.results.forEach((result) => {
-    const position = Number(result.Results[0].position);
-    const location = result.Circuit.circuitId;
+  teamMateResults?.races.forEach((result) => {
+    const position = Number(result.results[0].position);
+    // const location = result.Circuit.circuitId || "";
+    const location = "";
 
     seriesCombined[1].data.push({
       x: location,

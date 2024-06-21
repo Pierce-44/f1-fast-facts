@@ -1,5 +1,5 @@
 "use client";
-import { QualyResults } from "@/interfaces/interfaces";
+import { QualyResults } from "@/util/fetchDriverQualyResults";
 import dynamic from "next/dynamic";
 
 // Dynamically import the chart component
@@ -17,17 +17,17 @@ export default function DriverQualyVsTeamMate({
   teamMateQaulyResults,
 }: Props) {
   const driverName =
-    driverQaulyResults?.Races[0].QualifyingResults[0].Driver.familyName || "";
+    driverQaulyResults?.races[0].qualifyingResults[0].driver.familyName || "";
   const teamMateName =
-    teamMateQaulyResults?.Races[0].QualifyingResults[0].Driver.familyName || "";
+    teamMateQaulyResults?.races[0].qualifyingResults[0].driver.familyName || "";
 
   let driverTotal = 0;
   let teamMateTotal = 0;
 
-  driverQaulyResults?.Races.forEach((race, index) => {
-    const driverPosition = race.QualifyingResults[0].position;
+  driverQaulyResults?.races.forEach((race, index) => {
+    const driverPosition = race.qualifyingResults[0].position;
     const teamMatePosition =
-      teamMateQaulyResults?.Races[index].QualifyingResults[0].position;
+      teamMateQaulyResults?.races[index].qualifyingResults[0].position;
 
     if (Number(driverPosition) < Number(teamMatePosition)) {
       driverTotal = driverTotal + 1;

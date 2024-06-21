@@ -1,5 +1,5 @@
 "use client";
-import { QualyResults } from "@/interfaces/interfaces";
+import { QualyResults } from "@/util/fetchDriverQualyResults";
 // components/MyChart.js
 import dynamic from "next/dynamic";
 import React from "react";
@@ -19,11 +19,11 @@ export default function DriveQualyResultsChat({
   const [showTeamMate, setShowTeamMate] = React.useState(false);
 
   const driverGivenName =
-    driverQaulyResults?.Races[0].QualifyingResults[0].Driver.givenName;
+    driverQaulyResults?.races[0].qualifyingResults[0].driver.givenName;
   const driverFamilyName =
-    driverQaulyResults?.Races[0].QualifyingResults[0].Driver.familyName;
+    driverQaulyResults?.races[0].qualifyingResults[0].driver.familyName;
   const teamMateFamilyName =
-    teamMateQaulyResults?.Races[0].QualifyingResults[0].Driver.familyName;
+    teamMateQaulyResults?.races[0].qualifyingResults[0].driver.familyName;
 
   const series = [
     {
@@ -43,9 +43,9 @@ export default function DriveQualyResultsChat({
     },
   ];
 
-  driverQaulyResults?.Races.forEach((result) => {
-    const position = Number(result.QualifyingResults[0].position);
-    const location = result.Circuit.circuitId;
+  driverQaulyResults?.races.forEach((result) => {
+    const position = Number(result.qualifyingResults[0].position);
+    const location = result.circuit.circuitId;
 
     series[0].data.push({
       x: location,
@@ -58,9 +58,9 @@ export default function DriveQualyResultsChat({
     });
   });
 
-  teamMateQaulyResults?.Races.forEach((result) => {
-    const position = Number(result.QualifyingResults[0].position);
-    const location = result.Circuit.circuitId;
+  teamMateQaulyResults?.races.forEach((result) => {
+    const position = Number(result.qualifyingResults[0].position);
+    const location = result.circuit.circuitId;
 
     seriesCombined[1].data.push({
       x: location,
