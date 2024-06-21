@@ -25,6 +25,9 @@ export default function DriverRaceVsTeamMate({
 
   driverResults?.races.forEach((race, index) => {
     const driverPosition = race.results[0].position;
+
+    if (!teamMateResults?.races[index]) return;
+
     const teamMatePosition = teamMateResults?.races[index].results[0].position;
 
     if (Number(driverPosition) < Number(teamMatePosition)) {

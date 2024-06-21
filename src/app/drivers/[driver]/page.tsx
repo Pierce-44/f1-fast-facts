@@ -32,7 +32,7 @@ export default async function Driver({
     ) || [];
 
   const teamMate = teamInfo[0].drivers.filter(
-    (driver) => driver.givenName !== driverName
+    (driver) => driver.givenName !== driverName && driver.givenName !== "Oliver"
   )[0];
 
   const teamMateResults = await fetchDriverRaceResults(teamMate.driverId);

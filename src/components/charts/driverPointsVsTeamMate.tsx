@@ -25,6 +25,9 @@ export default function DriverPointsVsTeamMate({
 
   driverResults?.races.forEach((race, index) => {
     const driverPoints = race.results[0].points;
+
+    if (!teamMateResults?.races[index]) return;
+
     const teamMatePoints = teamMateResults?.races[index].results[0].points;
 
     driverTotal = driverTotal + Number(driverPoints);

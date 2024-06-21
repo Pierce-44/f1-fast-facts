@@ -44,10 +44,18 @@ export default function DriveRacePointsChat({
   let driverPointsAcc = 0;
   let teamMatePointsAcc = 0;
 
-  driverResults?.races.forEach((result) => {
-    const points = Number(result.results[0].points);
+  // had to do this for the case where a driver missed a race
+  const raceArray =
+    (driverResults?.races.length! > teamMateResults?.races.length!
+      ? driverResults?.races
+      : teamMateResults?.races) || [];
+
+  raceArray.forEach((nothing, index) => {
+    const result = driverResults?.races[index];
+
+    const points = Number(result?.results[0].points || 0);
     // const location = result.Circuit.circuitId;
-    const location = "";
+    const location = "test" + index;
     series[0].data.push({
       x: location,
       y: driverPointsAcc + points,
@@ -61,10 +69,12 @@ export default function DriveRacePointsChat({
     driverPointsAcc = driverPointsAcc + points;
   });
 
-  teamMateResults?.races.forEach((result) => {
-    const points = Number(result.results[0].points);
+  raceArray?.forEach((nothing, index) => {
+    const result = teamMateResults?.races[index];
+
+    const points = Number(result?.results[0].points || 0);
     // const location = result.Circuit.circuitId;
-    const location = "";
+    const location = "test" + index;
     seriesCombined[1].data.push({
       x: location,
       y: teamMatePointsAcc + points,

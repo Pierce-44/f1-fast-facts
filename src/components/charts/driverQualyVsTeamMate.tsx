@@ -26,6 +26,9 @@ export default function DriverQualyVsTeamMate({
 
   driverQaulyResults?.races.forEach((race, index) => {
     const driverPosition = race.qualifyingResults[0].position;
+
+    if (!teamMateQaulyResults?.races[index]) return;
+
     const teamMatePosition =
       teamMateQaulyResults?.races[index].qualifyingResults[0].position;
 

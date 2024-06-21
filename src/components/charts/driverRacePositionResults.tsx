@@ -41,10 +41,18 @@ export default function DriveRacePositionResults({
     },
   ];
 
-  driverResults?.races.forEach((result) => {
-    const position = Number(result.results[0].position);
+  // had to do this for the case where a driver missed a race
+  const raceArray =
+    (driverResults?.races.length! > teamMateResults?.races.length!
+      ? driverResults?.races
+      : teamMateResults?.races) || [];
+
+  raceArray.forEach((nothing, index) => {
+    const result = driverResults?.races[index];
+
+    const position = Number(result?.results[0].position || 0);
     // const location = result.Circuit.circuitId || "";
-    const location = "";
+    const location = "" + index;
 
     series[0].data.push({
       x: location,
@@ -57,10 +65,12 @@ export default function DriveRacePositionResults({
     });
   });
 
-  teamMateResults?.races.forEach((result) => {
-    const position = Number(result.results[0].position);
+  raceArray?.forEach((nothing, index) => {
+    const result = teamMateResults?.races[index];
+
+    const position = Number(result?.results[0].position || 0);
     // const location = result.Circuit.circuitId || "";
-    const location = "";
+    const location = "" + index;
 
     seriesCombined[1].data.push({
       x: location,

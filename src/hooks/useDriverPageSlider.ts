@@ -6,8 +6,6 @@ export default function useDriverPageSlider(
 ) {
   if (!driverResults) return null;
 
-  console.log("check", driverResults);
-
   const totalPoints = driverResults?.races.reduce(
     (acc, result) => acc + Number(result.results[0].points),
     0
