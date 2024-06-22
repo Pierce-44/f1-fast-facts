@@ -88,10 +88,70 @@ export default function DriveRacePointsChat({
     teamMatePointsAcc = teamMatePointsAcc + points;
   });
 
+  const options = {
+    chart: {
+      id: "basic-bar",
+    },
+    stroke: {
+      curve: "straight",
+    },
+    // fill: {
+    //   type: "solid",
+    // },
+    // fill: {
+    //   colors: ["#f2f4fa", "rgba(36, 123, 160, 0.4)"], // Area colors
+    // },
+    dataLabels: {
+      enabled: false,
+    },
+    title: {
+      text: "",
+      style: {
+        fontSize: "18px",
+        color: darkMode ? "#ffffff" : "#585858",
+      },
+    },
+    subtitle: {
+      text: "Points To Date",
+      style: {
+        fontSize: "12px",
+        color: darkMode ? "#7c7c7c" : "#7c7c7c",
+      },
+    },
+    grid: {
+      show: true,
+      borderColor: "#e7e7e7",
+      strokeDashArray: 4, // Dash pattern for the background grid lines
+    },
+    plotOptions: {
+      bar: {
+        borderRadius: 4,
+        columnWidth: "50%",
+      },
+    },
+    yaxis: {
+      labels: {
+        style: {
+          colors: "#9b9b9b",
+          fontSize: "14px",
+        },
+      },
+    },
+    colors: ["#5d87ff", "#00d4e3"],
+    xaxis: {
+      labels: {
+        style: {
+          colors: "#9b9b9b",
+          fontSize: "14px",
+        },
+      },
+    },
+  };
+
   options.title.text = `Championship Points - ${driverGivenName} ${driverFamilyName}`;
 
   return (
-    <div className="w-4/6 h-full shrink-0 rounded-md shadow-mine p-4 ">
+    <div className="w-4/6 h-full shrink-0 rounded-md shadow-mine p-4 dark:shadow-none border dark:border-opacity-20 dark:border-dark transition-all duration-500">
       <div className="w-full h-[400px] relative">
         <Chart
           className="bg-white dark:bg-dark transition-colors duration-700"
@@ -116,59 +176,3 @@ export default function DriveRacePointsChat({
     </div>
   );
 }
-
-const options = {
-  chart: {
-    id: "basic-bar",
-  },
-  stroke: {
-    curve: "straight",
-  },
-  // fill: {
-  //   type: "solid",
-  // },
-  // fill: {
-  //   colors: ["#f2f4fa", "rgba(36, 123, 160, 0.4)"], // Area colors
-  // },
-  dataLabels: {
-    enabled: false,
-  },
-  title: {
-    text: "",
-    style: {
-      fontSize: "18px",
-      color: "#585858",
-    },
-  },
-  subtitle: {
-    text: "Points To Date",
-  },
-  grid: {
-    show: true,
-    borderColor: "#e7e7e7",
-    strokeDashArray: 4, // Dash pattern for the background grid lines
-  },
-  plotOptions: {
-    bar: {
-      borderRadius: 4,
-      columnWidth: "50%",
-    },
-  },
-  yaxis: {
-    labels: {
-      style: {
-        colors: "#9b9b9b",
-        fontSize: "14px",
-      },
-    },
-  },
-  colors: ["#5d87ff", "#00d4e3"],
-  xaxis: {
-    labels: {
-      style: {
-        colors: "#9b9b9b",
-        fontSize: "14px",
-      },
-    },
-  },
-};

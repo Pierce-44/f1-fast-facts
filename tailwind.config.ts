@@ -14,6 +14,10 @@ const config: Config = {
       },
       backgroundColor: {
         dark: "#202936",
+        darkOffset: "#ffffff2a",
+      },
+      borderColor: {
+        dark: "#81a5d8",
       },
     },
   },
