@@ -146,12 +146,17 @@ export default function DriveRacePointsChat({
         },
       },
     },
+    legend: {
+      labels: {
+        colors: darkMode ? "#7c7c7c" : "#7c7c7c",
+      },
+    },
   };
 
   options.title.text = `Championship Points - ${driverGivenName} ${driverFamilyName}`;
 
   return (
-    <div className="w-4/6 h-full shrink-0 rounded-md shadow-mine p-4 dark:shadow-none border dark:border-opacity-20 dark:border-dark transition-all duration-500">
+    <div className="h-full shrink-0 rounded-md shadow-mine p-4 dark:shadow-none border dark:border-opacity-20 dark:border-dark transition-all duration-500">
       <div className="w-full h-[400px] relative">
         <Chart
           className="bg-white dark:bg-dark transition-colors duration-700"

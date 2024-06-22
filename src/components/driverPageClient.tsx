@@ -12,6 +12,7 @@ import { DriverResults } from "@/util/fetchDriverRaceResults";
 import { QualyResults } from "@/util/fetchDriverQualyResults";
 import * as atoms from "@/util/atoms";
 import { useAtom } from "jotai";
+import useDarkMode from "@/hooks/useDarkMode";
 
 interface Props {
   driverResults: DriverResults | null;
@@ -27,13 +28,13 @@ export default function DriverPageClient({
   teamMateQaulyResults,
 }: Props) {
   const [darkMode] = useAtom(atoms.darkMode);
-
+  useDarkMode();
   return (
     <main
-      id="page-scrolled"
+      id="drivers-scrolled"
       className={`${darkMode ? "dark" : ""} w-full h-full flex flex-col items-center justify-start overflow-x-hidden pb-20 transition-colors duration-700 dark:bg-dark`}
     >
-      <div className="max-w-6xl mt-16 w-full">
+      <div className="max-w-6xl mt-20 w-full">
         <DriverSliderStats driverResults={driverResults} />
       </div>
       <div className=" w-full px-4 pb-4 pt-6 max-w-6xl flex gap-6">

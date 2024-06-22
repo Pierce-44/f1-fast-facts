@@ -1,13 +1,20 @@
 "use client";
+import { usePathname } from "next/navigation";
 import React from "react";
 
-export default function useCalendarScrolled(elementId: string) {
+export default function useScrolled() {
   const [isScrolled, setIsScrolled] = React.useState(false);
 
-  const handleScroll = () => {
-    const calendar = document.getElementById(elementId);
+  const pathname = usePathname();
 
-    if (calendar && calendar?.scrollTop > 56) {
+  const handleScroll = () => {
+    const parts = pathname.split("/");
+    const filteredParts = parts.filter((part) => part !== "");
+    const firstItem = filteredParts[0];
+
+    const page = document.getElementById(`${firstItem}-scrolled`);
+
+    if (page && page?.scrollTop > 56) {
       setIsScrolled(true);
     } else {
       setIsScrolled(false);
@@ -15,14 +22,18 @@ export default function useCalendarScrolled(elementId: string) {
   };
 
   React.useEffect(() => {
-    const calendar = document.getElementById(elementId);
+    const parts = pathname.split("/");
+    const filteredParts = parts.filter((part) => part !== "");
+    const firstItem = filteredParts[0];
+
+    const page = document.getElementById(`${firstItem}-scrolled`);
 
     handleScroll();
-    calendar?.addEventListener("scroll", handleScroll);
+    page?.addEventListener("scroll", handleScroll);
     return () => {
-      calendar?.removeEventListener("scroll", handleScroll);
+      page?.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  }, [pathname]);
 
   return { isScrolled };
 }
