@@ -18,7 +18,7 @@ export default function UpperBar() {
       className={`${isScrolled ? "shadow-upperBar dark:border" : "dark:border-[#202936]"} bg-white   py-4 px-8  fixed top-0 z-20 transition-all duration-700 flex justify-between items-center dark:bg-dark ${darkMode ? "dark" : ""} dark:border-b dark:border-x-0 dark:border-t-0  border-white dark:shadow-none  dark:border-opacity-20 dark:border-dark ${sideBarOpen ? "w-[calc(100vw-275px)]" : "w-[calc(100vw-65px)]"}`}
     >
       <button
-        className="hover:bg-blue-50 group dark:hover:bg-darkOffset transition-colors p-1 rounded-full"
+        className={`hover:bg-blue-50 group dark:hover:bg-darkOffset transition-all p-1 rounded-full`}
         onClick={() => {
           setSideBarOpen(!sideBarOpen);
 
@@ -30,7 +30,7 @@ export default function UpperBar() {
         }}
       >
         <svg
-          className="fill-gray-600 dark:fill-gray-400 group-hover:fill-[#7296FF]"
+          className={`${!sideBarOpen ? "rotate-180" : ""} fill-gray-600 dark:fill-gray-400 group-hover:fill-[#7296FF] transition-all`}
           xmlns="http://www.w3.org/2000/svg"
           height="24px"
           viewBox="0 -960 960 960"

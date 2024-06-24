@@ -27,6 +27,7 @@ export default function DriverPageClient({
   driverQaulyResults,
   teamMateQaulyResults,
 }: Props) {
+  const [sideBarOpen] = useAtom(atoms.sideBarOpen);
   const [darkMode] = useAtom(atoms.darkMode);
   useDarkMode();
   return (
@@ -37,12 +38,24 @@ export default function DriverPageClient({
       <div className="max-w-6xl mt-20 w-full">
         <DriverSliderStats driverResults={driverResults} />
       </div>
-      <div className=" w-full px-4 pb-4 pt-6 max-w-6xl flex gap-6">
+      <div
+        className={` w-full px-4 pb-4 pt-6 max-w-6xl flex gap-6 
+    
+        ${sideBarOpen ? "max-[1425px]:flex-col " : "max-[1225px]:flex-col"}
+      
+      `}
+      >
         <DriveRacePointsChat
           driverResults={driverResults}
           teamMateResults={teamMateResults}
         />
-        <div className="w-full h-full flex flex-col items-center justify-between gap-6">
+        <div
+          className={` w-full  h-full flex flex-col items-center justify-between gap-6
+    
+          ${sideBarOpen ? "max-[900px]:flex-col max-[1425px]:flex-row max-[1425px]:w-[calc(100%-275px)]" : "max-[700px]:flex-col max-[1225px]:flex-row max-[1225px]:w-[calc(100%-60px)]"}
+        
+        `}
+        >
           <DriverRaceVsTeamMate
             driverResults={driverResults}
             teamMateResults={teamMateResults}

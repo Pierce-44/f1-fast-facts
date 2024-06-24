@@ -20,6 +20,7 @@ export default function DriveRacePointsChat({
   teamMateResults: DriverResults | null;
 }) {
   const [darkMode] = useAtom(atoms.darkMode);
+  const [sideBarOpen] = useAtom(atoms.sideBarOpen);
 
   const [showTeamMate, setShowTeamMate] = React.useState(false);
 
@@ -156,7 +157,13 @@ export default function DriveRacePointsChat({
   options.title.text = `Championship Points - ${driverGivenName} ${driverFamilyName}`;
 
   return (
-    <div className="w-4/6 h-full shrink-0 rounded-md shadow-mine p-4 dark:shadow-none border dark:border-opacity-20 dark:border-dark transition-all duration-500">
+    <div
+      className={` w-4/6 h-full max-h-[490px] shrink-0 rounded-md shadow-mine p-4 dark:shadow-none border dark:border-opacity-20 dark:border-dark transition-all duration-500
+    
+      ${sideBarOpen ? "max-[1425px]:w-[calc(100%-275px)]" : "max-[1225px]:w-[calc(100%-60px)]"}
+    
+    `}
+    >
       <div className="w-full h-[400px] relative">
         <Chart
           className="bg-white dark:bg-dark transition-colors duration-700"
