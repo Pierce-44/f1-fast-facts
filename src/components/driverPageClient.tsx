@@ -84,7 +84,7 @@ export default function DriverPageClient({
           className={`px-4 pb-4 pt-6 flex gap-6 max-[1090px]:flex-col-reverse`}
         >
           <div className="w-[350px] shrink-0 max-[1090px]:w-full h-full flex flex-col items-center justify-between gap-6">
-            <DriverBestRace />
+            <DriverBestRace driverResults={driverResults} />
           </div>
           <div className="flex-grow">
             <DriveRacePositionResults
@@ -111,7 +111,7 @@ export default function DriverPageClient({
               />
             </div>
             <div className="w-full h-full">
-              <DriverBestQualy />
+              <DriverBestQualy driverQaulyResults={driverQaulyResults} />
             </div>
           </div>
         </div>
