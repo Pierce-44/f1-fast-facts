@@ -14,6 +14,12 @@ export default function NewsClient({ news }: Props) {
 
   useDarkMode();
 
+  const newsOrderOfDate =
+    news?.articles.sort(
+      (a, b) =>
+        (new Date(b.publishedAt) as any) - (new Date(a.publishedAt) as any)
+    ) || [];
+
   return (
     <main
       id="news-scrolled"
@@ -34,7 +40,7 @@ export default function NewsClient({ news }: Props) {
           </div>
         </div>
         <div className="flex items-start justify-center flex-wrap gap-10">
-          {news?.articles.map((article, index) => {
+          {newsOrderOfDate.map((article, index) => {
             if (article.source.name === "[Removed]") {
               return <div key={index}></div>;
             } else {
