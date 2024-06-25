@@ -14,6 +14,7 @@ interface Props {
 export default function SideBarClient({ drivers }: Props) {
   const [darkMode] = useAtom(atoms.darkMode);
   const [sideBarOpen, setSideBarOpen] = useAtom(atoms.sideBarOpen);
+  const [, setSideBarHidden] = useAtom(atoms.sideBarHidden);
   const [, setDriversDropDownOpen] = useAtom(atoms.driversDropDownOpen);
 
   const supportedSideBarItems = ["calendar", "news"];
@@ -32,11 +33,10 @@ export default function SideBarClient({ drivers }: Props) {
   };
 
   const handleResize = () => {
-    console.log("hewrerererer");
-
     if (window && window?.innerWidth <= 800) {
       setSideBarOpen(false);
       setDriversDropDownOpen(false);
+      setSideBarHidden(true);
     }
   };
 

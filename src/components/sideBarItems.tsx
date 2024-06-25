@@ -11,11 +11,15 @@ interface Props {
 export default function SideBarItems({ itemName }: Props) {
   const pathname = usePathname();
 
-  const [sideBarOpen] = useAtom(atoms.sideBarOpen);
+  const [sideBarOpen, setSideBarOpen] = useAtom(atoms.sideBarOpen);
+  const [sideBarHidden] = useAtom(atoms.sideBarHidden);
 
   return (
     <Link
       href={`/${itemName}`}
+      onClick={() => {
+        sideBarHidden && setSideBarOpen(false);
+      }}
       className={`p-3 w-full flex items-center justify-start gap-6 rounded-lg ${pathname === `/${itemName}` ? "bg-[#5d87ff] text-white" : "hover:bg-[#EAF0FF] dark:hover:bg-darkOffset hover:text-[#7296FF] dark:text-gray-400"} transition-all group select-none`}
     >
       {itemName === "calendar" ? <CalendarSvg itemName={itemName} /> : ""}

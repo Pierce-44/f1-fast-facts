@@ -180,8 +180,7 @@ export default function DriveRacePointsChat({
         }}
         className="bg-[#5d87ff] text-white rounded-md px-4 py-2 ml-10 mt-4 hover:bg-[#3e66d3] transition-all text-wrap"
       >
-        {showTeamMate ? "Without Teammate - " : "With Teammate - "}
-        {teamMateFamilyName}
+        {showTeamMate ? "Without Teammate" : "With Teammate"}
       </button>
     </div>
   );

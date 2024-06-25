@@ -29,6 +29,7 @@ export default function DriverPageClient({
 }: Props) {
   const [sideBarOpen] = useAtom(atoms.sideBarOpen);
   const [darkMode] = useAtom(atoms.darkMode);
+  const [sideBarHidden] = useAtom(atoms.sideBarHidden);
   useDarkMode();
   return (
     <main
@@ -101,7 +102,7 @@ export default function DriverPageClient({
           </div>
           <div
             className={` flex flex-col items-center justify-evenly gap-6 w-[350px] max-[1090px]:w-full max-[1090px]:flex-row  
-              ${sideBarOpen && window && window?.innerWidth > 800 ? "max-[1000px]:flex-col" : "max-[750px]:flex-col"}`}
+              ${sideBarOpen && !sideBarHidden ? "max-[1000px]:flex-col" : "max-[750px]:flex-col"}`}
           >
             <div className="w-full h-full">
               <DriverQualyVsTeamMate

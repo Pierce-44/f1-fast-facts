@@ -14,6 +14,7 @@ export default function DriversDropDown({ drivers }: Props) {
   const [sideBarOpen, setSideBarOpen] = useAtom(atoms.sideBarOpen);
 
   const [showDropDown, setShowDropDown] = useAtom(atoms.driversDropDownOpen);
+  const [sideBarHidden] = useAtom(atoms.sideBarHidden);
 
   const params = useParams();
 
@@ -68,6 +69,9 @@ export default function DriversDropDown({ drivers }: Props) {
             >
               <Link
                 href={`/drivers/${driver.driverId}`}
+                onClick={() => {
+                  sideBarHidden && setSideBarOpen(false);
+                }}
                 className={`${driver.driverId === params.driver ? "bg-[#eaf0ff] text-[#7296FF] dark:bg-darkOffset" : "hover:bg-[#eaf0ff] hover:text-[#7296FF] dark:hover:bg-darkOffset"}  py-2 rounded w-full text-start pl-11 transition-all`}
               >
                 {driver.familyName}
