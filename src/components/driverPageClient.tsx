@@ -33,63 +33,86 @@ export default function DriverPageClient({
   return (
     <main
       id="drivers-scrolled"
-      className={`${darkMode ? "dark" : ""} w-full h-full flex flex-col items-center justify-start overflow-x-hidden pb-20 transition-colors duration-700 dark:bg-dark`}
-    >
-      <div className="max-w-6xl mt-20 w-full">
-        <DriverSliderStats driverResults={driverResults} />
-      </div>
-      <div
-        className={` w-full px-4 pb-4 pt-6 max-w-6xl flex gap-6 
-    
-        ${sideBarOpen ? "max-[1425px]:flex-col " : "max-[1225px]:flex-col"}
+      className={`${darkMode ? "dark" : ""} h-full  pb-20 transition-colors duration-700  overflow-y-scroll
       
+      ${sideBarOpen ? "w-[calc(100vw-275px)]" : "w-[calc(100vw-65px)]"}
+
+      max-[800px]:!w-full
       `}
-      >
-        <DriveRacePointsChat
-          driverResults={driverResults}
-          teamMateResults={teamMateResults}
-        />
+    >
+      <div className="fixed top-0 left-0 w-full h-full bg-white dark:bg-dark -z-50 transition-colors duration-700"></div>
+      <div className="max-w-7xl  mx-auto">
+        <div className=" pt-20 ">
+          <DriverSliderStats driverResults={driverResults} />
+        </div>
+        <div className={`px-4 pb-4 pt-6 flex gap-6 max-[1090px]:flex-col`}>
+          <div className="flex-grow">
+            <DriveRacePointsChat
+              driverResults={driverResults}
+              teamMateResults={teamMateResults}
+            />
+          </div>
+          <div
+            className={` flex flex-col items-center justify-evenly gap-6 w-[350px]  max-[1090px]:w-full
+              ${sideBarOpen ? "max-[1000px]:flex-col max-[1090px]:flex-row " : "max-[1090px]:flex-row max-[700px]:flex-col "}
+              `}
+          >
+            <div
+              className={`w-full h-full max-[800px]:!max-w-[calc(50vw-32px)] max-[700px]:!max-w-[calc(100vw-32px)]
+                ${sideBarOpen ? "" : "max-[1000px]:max-w-[calc(50vw-60px)]"}
+              `}
+            >
+              <DriverRaceVsTeamMate
+                driverResults={driverResults}
+                teamMateResults={teamMateResults}
+              />
+            </div>
+            <div
+              className={`w-full h-full max-[800px]:!max-w-[calc(50vw-32px)] max-[700px]:!max-w-[calc(100vw-32px)]
+                ${sideBarOpen ? "" : "max-[1000px]:max-w-[calc(50vw-60px)]"}
+              `}
+            >
+              <DriverPointsVsTeamMate
+                driverResults={driverResults}
+                teamMateResults={teamMateResults}
+              />
+            </div>
+          </div>
+        </div>
         <div
-          className={` w-full  h-full flex flex-col items-center justify-between gap-6
-    
-          ${sideBarOpen ? "max-[900px]:flex-col max-[1425px]:flex-row max-[1425px]:w-[calc(100%-275px)]" : "max-[700px]:flex-col max-[1225px]:flex-row max-[1225px]:w-[calc(100%-60px)]"}
-        
-        `}
+          className={`px-4 pb-4 pt-6 flex gap-6 max-[1090px]:flex-col-reverse`}
         >
-          <DriverRaceVsTeamMate
-            driverResults={driverResults}
-            teamMateResults={teamMateResults}
-          />
-          <DriverPointsVsTeamMate
-            driverResults={driverResults}
-            teamMateResults={teamMateResults}
-          />
+          <div className="w-[350px] shrink-0 max-[1090px]:w-full h-full flex flex-col items-center justify-between gap-6">
+            <DriverBestRace />
+          </div>
+          <div className="flex-grow">
+            <DriveRacePositionResults
+              driverResults={driverResults}
+              teamMateResults={teamMateResults}
+            />
+          </div>
         </div>
-      </div>
-      <div className=" w-full px-4 pb-4 pt-6 max-w-6xl flex gap-6 flex-row-reverse">
-        <DriveRacePositionResults
-          driverResults={driverResults}
-          teamMateResults={teamMateResults}
-        />
-        <div className="w-full h-full flex flex-col items-center justify-between gap-6">
-          <DriverBestRace />
-          {/* <DriverQualyVsTeamMate
-            driverQaulyResults={driverQaulyResults}
-            teamMateQaulyResults={teamMateQaulyResults}
-          /> */}
-        </div>
-      </div>
-      <div className=" w-full px-4 pb-4 pt-6 max-w-6xl flex gap-6">
-        <DriveQualyResultsChat
-          driverQaulyResults={driverQaulyResults}
-          teamMateQaulyResults={teamMateQaulyResults}
-        />
-        <div className="w-full h-full flex flex-col items-center justify-between gap-6">
-          <DriverQualyVsTeamMate
-            driverQaulyResults={driverQaulyResults}
-            teamMateQaulyResults={teamMateQaulyResults}
-          />
-          <DriverBestQualy />
+        <div className={`px-4 pb-4 pt-6 flex gap-6 max-[1090px]:flex-col`}>
+          <div className="flex-grow">
+            <DriveQualyResultsChat
+              driverQaulyResults={driverQaulyResults}
+              teamMateQaulyResults={teamMateQaulyResults}
+            />
+          </div>
+          <div
+            className={` flex flex-col items-center justify-evenly gap-6 w-[350px] max-[1090px]:w-full max-[1090px]:flex-row  
+              ${sideBarOpen && window && window?.innerWidth > 800 ? "max-[1000px]:flex-col" : "max-[750px]:flex-col"}`}
+          >
+            <div className="w-full h-full">
+              <DriverQualyVsTeamMate
+                driverQaulyResults={driverQaulyResults}
+                teamMateQaulyResults={teamMateQaulyResults}
+              />
+            </div>
+            <div className="w-full h-full">
+              <DriverBestQualy />
+            </div>
+          </div>
         </div>
       </div>
     </main>

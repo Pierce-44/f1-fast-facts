@@ -152,7 +152,7 @@ export default function DriveQualyResultsChat({
   options.title.text = `Qualifying Results - ${driverGivenName} ${driverFamilyName}`;
 
   return (
-    <div className="w-4/6 h-full shrink-0 rounded-md shadow-mine p-4 flex flex-col items-start gap-10 dark:shadow-none border dark:border-opacity-20 dark:border-dark transition-all duration-500">
+    <div className="h-full min-w-[400px] max-[1090px]:min-w-min shrink-0 rounded-md shadow-mine p-4 flex flex-col items-start gap-10 dark:shadow-none border dark:border-opacity-20 dark:border-dark transition-all duration-500">
       <div className="w-full h-[400px] relative">
         <Chart
           className="bg-white dark:bg-dark transition-colors duration-700"
@@ -163,7 +163,7 @@ export default function DriveQualyResultsChat({
           width="100%"
           curve="straight"
         />
-        <div className="absolute h-full w-full bg-slate-100 animate-pulse top-0 left-0 -z-10 rounded-lg"></div>
+        <div className="absolute h-full w-full bg-slate-100 dark:bg-dark animate-pulse top-0 left-0 -z-10 rounded-lg"></div>
       </div>
       <button
         onClick={() => {

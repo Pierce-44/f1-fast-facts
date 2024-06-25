@@ -15,14 +15,16 @@ export default function UpperBar() {
 
   return (
     <div
-      className={`${isScrolled ? "shadow-upperBar dark:border" : "dark:border-[#202936]"} bg-white   py-4 px-8  fixed top-0 z-20 transition-all duration-700 flex justify-between items-center dark:bg-dark ${darkMode ? "dark" : ""} dark:border-b dark:border-x-0 dark:border-t-0  border-white dark:shadow-none  dark:border-opacity-20 dark:border-dark ${sideBarOpen ? "w-[calc(100vw-275px)]" : "w-[calc(100vw-65px)]"}`}
+      className={`${isScrolled ? "shadow-upperBar dark:border" : "dark:border-[#202936]"} bg-white   py-4 px-8  fixed top-0 z-20 transition-all duration-700 flex justify-between items-center dark:bg-dark ${darkMode ? "dark" : ""} dark:border-b dark:border-x-0 dark:border-t-0  border-white dark:shadow-none  dark:border-opacity-20 dark:border-dark ${sideBarOpen ? "w-[calc(100vw-275px)]" : "w-[calc(100vw-65px)]"}
+            max-[800px]:!w-full
+      `}
     >
       <button
         className={`hover:bg-blue-50 group dark:hover:bg-darkOffset transition-all p-1 rounded-full`}
         onClick={() => {
           setSideBarOpen(!sideBarOpen);
 
-          if (showDropDown) {
+          if (showDropDown && window && window?.innerWidth > 800) {
             setShowDropDown(false);
           } else if (pathname.includes("drivers")) {
             setShowDropDown(true);

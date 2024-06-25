@@ -7,7 +7,7 @@ export default function DriverBestRace() {
       <div className="relative h-[250px] w-[200px] mx-auto">
         <Image className="py-5" src="/trophyCartoon.png" alt="f1 wheel" fill />
       </div>
-      <div className="bg-white px-4 py-2 rounded-lg dark:bg-dark">
+      <div className="bg-white px-4 py-2 rounded-lg dark:bg-dark transition-colors duration-700">
         <div className="text-sm font-semibold text-gray-500 dark:text-gray-400 pt-2 flex items-center">
           <svg
             xmlns="http://www.w3.org/2000/svg"

@@ -17,6 +17,7 @@ export default function DriverSliderClient({ driverResults }: Props) {
 
   return (
     <Swiper
+      className=""
       slidesPerView="auto"
       loop={true}
       autoplay={{

@@ -7,7 +7,7 @@ export default function DriverBestQualy() {
       <div className="relative h-[90px] w-[90px] mx-auto">
         <Image className="" src="/f1Wheel.png" alt="f1 wheel" fill />
       </div>
-      <div className="bg-white px-4 rounded-lg dark:bg-dark">
+      <div className="bg-white px-4 rounded-lg dark:bg-dark transition-colors duration-700">
         <div className="text-sm font-semibold text-gray-500 pt-2 flex items-center dark:text-gray-400">
           <svg
             xmlns="http://www.w3.org/2000/svg"

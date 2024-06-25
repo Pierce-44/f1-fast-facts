@@ -63,7 +63,7 @@ export default function DriverQualyVsTeamMate({
   };
 
   return (
-    <div className="w-full h-full rounded-md shadow-mine flex items-center justify-between text-gray-600 min-h-[190px] dark:shadow-none border dark:border-opacity-20 dark:border-dark  transition-all duration-500">
+    <div className="w-full h-full rounded-md shadow-mine flex items-center justify-between text-gray-600 min-h-[190px] dark:shadow-none border dark:border-opacity-20 dark:border-dark  transition-all duration-500 max-[460px]:flex-col ">
       <div className="h-full w-1/2 flex flex-col justify-start gap-5 ml-2">
         <div className="space-y-2">
           <p className="pl-4 font-semibold pt-5 dark:text-white">Qualifying</p>
