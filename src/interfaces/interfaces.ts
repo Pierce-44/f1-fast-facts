@@ -1,3 +1,5 @@
+import { ConstructorRacePoints } from "@/util/handleGeneralPageStats";
+
 export interface DriverResults {
   id: string;
   results: [
@@ -82,4 +84,33 @@ export interface Article {
 interface Source {
   id?: string;
   name: string;
+}
+
+export interface GeneralStats {
+  driversInfo: {
+    driverFamilyName: string;
+    driverFirstName: string;
+    totalPoints: number;
+    lastRacePosition: number;
+    lastQualyPosition: number;
+  }[];
+  championshipLeader:
+    | {
+        driverFamilyName: string;
+        driverFirstName: string;
+      }
+    | undefined;
+  lastRaceWinner:
+    | {
+        driverFamilyName: string;
+        driverFirstName: string;
+      }
+    | undefined;
+  lastQualyWinner:
+    | {
+        driverFamilyName: string;
+        driverFirstName: string;
+      }
+    | undefined;
+  constructorChampionshipPoints: ConstructorRacePoints[];
 }

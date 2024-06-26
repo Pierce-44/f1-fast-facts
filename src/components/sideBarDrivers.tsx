@@ -28,11 +28,6 @@ export default function DriversDropDown({ drivers }: Props) {
 
   return (
     <div>
-      <p
-        className={`${sideBarOpen ? "" : "opacity-0"} text-[12px] font-extrabold pb-4 dark:text-white transition-opacity duration-700`}
-      >
-        HOME
-      </p>
       <button
         onClick={() => {
           if (!sideBarOpen) {

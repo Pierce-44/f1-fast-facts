@@ -77,6 +77,14 @@ export default function SideBarClient({ drivers }: Props) {
             F1 Fast Facts
           </p>
         </div>
+        <p
+          className={`${sideBarOpen ? "" : "opacity-0"} text-[12px] font-extrabold pb-4 dark:text-white transition-opacity duration-700`}
+        >
+          HOME
+        </p>
+        <div className="mb-4">
+          <SideBarItems itemName={"general"} />
+        </div>
         <DriversDropDown drivers={drivers} />
         <div className="space-y-4">
           {supportedSideBarItems.map((item, index) => {

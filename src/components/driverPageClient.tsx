@@ -41,7 +41,7 @@ export default function DriverPageClient({
       max-[800px]:!w-full
       `}
     >
-      <div className="fixed top-0 left-0 w-full h-full bg-white dark:bg-dark -z-50 transition-colors duration-700"></div>
+      <div className="fixed top-0 left-0 w-[150vw] h-[150vh] bg-white dark:bg-dark -z-50 transition-colors duration-700"></div>
       <div className="max-w-7xl  mx-auto">
         <div className=" pt-20 ">
           <DriverSliderStats driverResults={driverResults} />

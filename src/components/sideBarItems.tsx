@@ -24,6 +24,7 @@ export default function SideBarItems({ itemName }: Props) {
     >
       {itemName === "calendar" ? <CalendarSvg itemName={itemName} /> : ""}
       {itemName === "news" ? <NewsSvg itemName={itemName} /> : ""}
+      {itemName === "general" ? <GeneralSvg itemName={itemName} /> : ""}
 
       <p
         className={`${sideBarOpen ? "" : "opacity-0"} transition-opacity duration-700`}
@@ -58,6 +59,20 @@ function NewsSvg({ itemName }: { itemName: string }) {
       className={`w-6 h-6 fill-gray-600 ${pathname === `/${itemName}` ? "fill-white" : "group-hover:fill-[#7296FF]"} transition-all shrink-0`}
     >
       <path d="M720-440v-80h160v80H720Zm48 280-128-96 48-64 128 96-48 64Zm-80-480-48-64 128-96 48 64-128 96ZM200-200v-160h-40q-33 0-56.5-23.5T80-440v-80q0-33 23.5-56.5T160-600h160l200-120v480L320-360h-40v160h-80Zm240-182v-196l-98 58H160v80h182l98 58Zm120 36v-268q27 24 43.5 58.5T620-480q0 41-16.5 75.5T560-346ZM300-480Z" />
+    </svg>
+  );
+}
+
+function GeneralSvg({ itemName }: { itemName: string }) {
+  const pathname = usePathname();
+
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 -960 960 960"
+      className={`w-6 h-6 fill-gray-600 ${pathname === `/${itemName}` ? "fill-white" : "group-hover:fill-[#7296FF]"} transition-all shrink-0`}
+    >
+      <path d="m200-120-80-480h720l-80 480H200Zm67-80h426l51-320H216l51 320Zm133-160h160q17 0 28.5-11.5T600-400q0-17-11.5-28.5T560-440H400q-17 0-28.5 11.5T360-400q0 17 11.5 28.5T400-360ZM240-640q-17 0-28.5-11.5T200-680q0-17 11.5-28.5T240-720h480q17 0 28.5 11.5T760-680q0 17-11.5 28.5T720-640H240Zm80-120q-17 0-28.5-11.5T280-800q0-17 11.5-28.5T320-840h320q17 0 28.5 11.5T680-800q0 17-11.5 28.5T640-760H320Zm-53 560h426-426Z" />
     </svg>
   );
 }

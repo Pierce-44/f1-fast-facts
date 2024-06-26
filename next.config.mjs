@@ -4,7 +4,7 @@ const nextConfig = {
     return [
       {
         source: "/",
-        destination: "/drivers/hamilton", // on base url load default to showing Hamilton for now
+        destination: "/general",
         permanent: true,
       },
     ];
