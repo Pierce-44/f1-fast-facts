@@ -45,7 +45,7 @@ export default function DriverPageClient({
     >
       <div className="fixed top-0 left-0 w-[150vw] h-[150vh] bg-white dark:bg-dark -z-50 transition-colors duration-700"></div>
       <div className="max-w-7xl  mx-auto">
-        <div className=" pt-20 flex flex-col sm:flex-row mr-4">
+        <div className=" pt-20 flex flex-col sm:flex-row mr-4 overflow-hidden">
           <div className="flex flex-col justify-evenly items-center h-full px-10 py-4 shrink-0">
             <Link
               href={`/drivers/${driverResults?.driverId}`}
