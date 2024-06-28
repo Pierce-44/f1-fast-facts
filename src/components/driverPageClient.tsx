@@ -13,6 +13,8 @@ import { QualyResults } from "@/util/fetchDriverQualyResults";
 import * as atoms from "@/util/atoms";
 import { useAtom } from "jotai";
 import useDarkMode from "@/hooks/useDarkMode";
+import Image from "next/image";
+import Link from "next/link";
 
 interface Props {
   driverResults: DriverResults | null;
@@ -43,7 +45,26 @@ export default function DriverPageClient({
     >
       <div className="fixed top-0 left-0 w-[150vw] h-[150vh] bg-white dark:bg-dark -z-50 transition-colors duration-700"></div>
       <div className="max-w-7xl  mx-auto">
-        <div className=" pt-20 ">
+        <div className=" pt-20 flex flex-col sm:flex-row mr-4">
+          <div className="flex flex-col justify-evenly items-center h-full px-10 py-4 shrink-0">
+            <Link
+              href={`/drivers/${driverResults?.driverId}`}
+              className="group rounded-full overflow-hidden"
+            >
+              <Image
+                className=" group-hover:scale-110 transition-all duration-300"
+                width={100}
+                height={100}
+                src={`/imagesDrivers/${driverResults?.driverId}.webp`}
+                alt=""
+              ></Image>
+            </Link>
+
+            <p className="text-sm text-center pt-4 text-gray-700 font-semibold dark:text-white">
+              {driverResults?.races[0].results[0].driver.givenName}{" "}
+              {driverResults?.races[0].results[0].driver.familyName}
+            </p>
+          </div>
           <DriverSliderStats driverResults={driverResults} />
         </div>
         <div className={`px-4 pb-4 pt-6 flex gap-6 max-[1090px]:flex-col`}>

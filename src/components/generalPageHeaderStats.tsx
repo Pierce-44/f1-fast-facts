@@ -1,5 +1,6 @@
 import { GeneralStats } from "@/interfaces/interfaces";
 import Image from "next/image";
+import Link from "next/link";
 
 interface Props {
   stats: GeneralStats;
@@ -20,7 +21,19 @@ export default function GeneralPageHeaderStats({ stats }: Props) {
           <p className="dark:text-white text-sm font-bold lg:text-lg text-gray-700">
             Championship leader:
           </p>
-          <p className="text-xs lg:text-base text-[#5d87ff] font-semibold ">{`${stats.championshipLeader?.driverFirstName || ""} ${stats.championshipLeader?.driverFamilyName || ""}`}</p>
+          <p className="text-xs lg:text-base text-[#5d87ff] font-semibold ">{`${stats.championshipLeader?.driverFirstName || ""} ${stats.championshipLeader?.driverFamilyName || ""}`}</p>{" "}
+          {/* <Link
+            href={`/drivers/${stats.championshipLeader?.driverId}`}
+            className="group rounded-full overflow-hidden"
+          >
+            <Image
+              className=" group-hover:scale-110 transition-all duration-300"
+              width={40}
+              height={40}
+              src={`/imagesDrivers/${stats.championshipLeader?.driverId}.webp`}
+              alt=""
+            ></Image>
+          </Link> */}
         </div>
         <div className="sm:flex justify-start items-center gap-4">
           <svg
@@ -34,6 +47,18 @@ export default function GeneralPageHeaderStats({ stats }: Props) {
             Last Race Winner:
           </p>
           <p className="text-xs lg:text-base text-[#5d87ff] font-semibold ">{`${stats.lastRaceWinner?.driverFirstName || ""} ${stats.lastRaceWinner?.driverFamilyName || ""}`}</p>
+          {/* <Link
+            href={`/drivers/${stats.lastRaceWinner?.driverId}`}
+            className="group rounded-full overflow-hidden"
+          >
+            <Image
+              className=" group-hover:scale-110 transition-all duration-300"
+              width={40}
+              height={40}
+              src={`/imagesDrivers/${stats.lastRaceWinner?.driverId}.webp`}
+              alt=""
+            ></Image>
+          </Link> */}
         </div>
         <div className="sm:flex justify-start items-center gap-4">
           <svg
@@ -47,6 +72,18 @@ export default function GeneralPageHeaderStats({ stats }: Props) {
             Last Race Pole:
           </p>
           <p className="text-xs lg:text-base text-[#5d87ff] font-semibold ">{`${stats.lastQualyWinner?.driverFirstName || ""} ${stats.lastQualyWinner?.driverFamilyName || ""}`}</p>
+          {/* <Link
+            href={`/drivers/${stats.lastQualyWinner?.driverId}`}
+            className="group rounded-full overflow-hidden"
+          >
+            <Image
+              className=" group-hover:scale-110 transition-all duration-300"
+              width={40}
+              height={40}
+              src={`/imagesDrivers/${stats.lastQualyWinner?.driverId}.webp`}
+              alt=""
+            ></Image>
+          </Link> */}
         </div>
       </div>
 

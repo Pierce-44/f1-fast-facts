@@ -14,6 +14,7 @@ import { GeneralStats } from "@/interfaces/interfaces";
 import GeneralConstructorsPoints from "./charts/generalConstructorsPoints";
 import useDarkMode from "@/hooks/useDarkMode";
 import ConstructorsStandings from "./constructorsStandings";
+import DriverImageGallery from "./driversImageGallery";
 
 interface Props {
   generalResults: GeneralResults;
@@ -48,10 +49,14 @@ export default function GeneralPageClient({
           <div className="space-y-8 ">
             <GeneralPageHeaderStats stats={stats} />
 
-            <div className={``}>
-              <GeneralPageSlider
-                driverResults={generalResults.driverRaceResults[0]}
+            <div>
+              <DriverImageGallery
+                driverRaceResults={generalResults.driverRaceResults}
               />
+            </div>
+
+            <div className={``}>
+              <GeneralPageSlider stats={stats} />
             </div>
             <div
               className={`${sideBarOpen ? "max-[1200px]:!flex-col" : "max-[960px]:!flex-col"} flex flex-col gap-6 h-full min-[800px]:flex-row`}

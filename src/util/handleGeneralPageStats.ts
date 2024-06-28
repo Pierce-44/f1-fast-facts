@@ -1,7 +1,9 @@
 import { GeneralResults } from "@/util/fetchGeneralResults";
 import React from "react";
+import { Calendar } from "./fetchRaceCalendar";
+import calculateAge from "./calculateAge";
 
-type driversInfo = {
+export type driversInfo = {
   driverId: string | undefined;
   driverTeam: string | undefined;
   driverFamilyName: string;
@@ -19,7 +21,15 @@ export type ConstructorRacePoints = {
   }[];
 };
 
-export default function handleGeneralPageStats(generalResults: GeneralResults) {
+interface Props {
+  raceCalendar: Calendar[] | null;
+  generalResults: GeneralResults;
+}
+
+export default function handleGeneralPageStats({
+  raceCalendar,
+  generalResults,
+}: Props) {
   const driversInfo: driversInfo = [];
 
   const constructorChampionshipPoints: ConstructorRacePoints[] = [];
@@ -120,11 +130,90 @@ export default function handleGeneralPageStats(generalResults: GeneralResults) {
       : previousValue;
   }, driversInfo[0]);
 
+  const nextRace = raceCalendar?.filter((race) => {
+    const raceDate = new Date(`${race.date}T${race.time}`);
+    return raceDate > new Date();
+  })[0];
+
+  const thisRaceIndex = raceCalendar?.findIndex((race) => {
+    const raceDate = new Date(`${race.date}T${race.time}`);
+    return raceDate > new Date();
+  });
+
+  const numberOfRaces = raceCalendar?.length;
+
+  const driverRaceResultsFiltered = generalResults.driverRaceResults.filter(
+    (driver) => driver?.driverId !== "bearman"
+  );
+
+  const sumOfDriversAge = driverRaceResultsFiltered.reduce(
+    (previousValue, currentValue) => {
+      const dateOfBirth =
+        currentValue?.races[0].results[0].driver.dateOfBirth || "";
+      const driverAge = calculateAge(dateOfBirth);
+      return driverAge + previousValue;
+    },
+    0
+  );
+
+  const averageDriverAge = sumOfDriversAge / driverRaceResultsFiltered.length;
+
+  let oldestDriverName = "";
+
+  const oldestDriverAge = driverRaceResultsFiltered.reduce(
+    (previousValue, currentValue) => {
+      const dateOfBirth =
+        currentValue?.races[0].results[0].driver.dateOfBirth || "";
+      const driverAge = calculateAge(dateOfBirth);
+
+      if (driverAge > previousValue) {
+        oldestDriverName =
+          currentValue?.races[0].results[0].driver.familyName || "";
+      }
+
+      return driverAge > previousValue ? driverAge : previousValue;
+    },
+    0
+  );
+
+  let youngestDriverName = "";
+
+  const youngestDriverAge = driverRaceResultsFiltered.reduce(
+    (previousValue, currentValue) => {
+      const dateOfBirth =
+        currentValue?.races[0].results[0].driver.dateOfBirth || "";
+      const driverAge = calculateAge(dateOfBirth);
+
+      if (driverAge < previousValue) {
+        youngestDriverName =
+          currentValue?.races[0].results[0].driver.familyName || "";
+      }
+
+      return driverAge < previousValue ? driverAge : previousValue;
+    },
+    100
+  );
+
+  // next race
+  // average age
+  // number of races
+  // number of drivers
+  // oldest driver age
+  // youngest driver age
+
   return {
     driversInfo,
     championshipLeader,
     lastRaceWinner,
     lastQualyWinner,
     constructorChampionshipPoints,
+    nextRace,
+    averageDriverAge,
+    thisRaceIndex,
+    numberOfRaces,
+    oldestDriverAge,
+    oldestDriverName,
+    youngestDriverAge,
+    youngestDriverName,
   };
 }

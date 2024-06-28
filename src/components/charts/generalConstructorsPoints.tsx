@@ -57,7 +57,7 @@ export default function GeneralConstructorsPoints({
 
   const options = {
     chart: {
-      id: "basic-bar",
+      id: "general-race-points-constructors",
     },
     stroke: {
       curve: "straight",
@@ -160,7 +160,33 @@ export default function GeneralConstructorsPoints({
           setShowSum(!showSum);
         }}
       >
-        {showSum ? "Data Per Race" : "Data Summed"}
+        {showSum ? "Points Per Race" : "Points Summed"}
+      </button>
+      <button
+        className="bg-[#5d87ff] text-white rounded-md px-4 py-2 ml-10 mt-8 hover:bg-[#3e66d3] transition-all text-wrap"
+        onClick={() => {
+          const chart = ApexCharts.getChartByID(
+            "general-race-points-constructors"
+          );
+          constructorChampionshipPoints.forEach((team) => {
+            chart?.hideSeries(team?.teamName || "");
+          });
+        }}
+      >
+        Hide All
+      </button>
+      <button
+        className="bg-[#5d87ff] text-white rounded-md px-4 py-2 ml-10 mt-8 hover:bg-[#3e66d3] transition-all text-wrap"
+        onClick={() => {
+          const chart = ApexCharts.getChartByID(
+            "general-race-points-constructors"
+          );
+          constructorChampionshipPoints.forEach((team) => {
+            chart?.showSeries(team?.teamName || "");
+          });
+        }}
+      >
+        Show All
       </button>
     </div>
   );

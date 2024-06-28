@@ -24,10 +24,10 @@ export default function UpperBar() {
         onClick={() => {
           setSideBarOpen(!sideBarOpen);
 
-          if (showDropDown && window && window?.innerWidth > 800) {
+          if (pathname.includes("drivers")) {
+            setShowDropDown(!sideBarOpen);
+          } else {
             setShowDropDown(false);
-          } else if (pathname.includes("drivers")) {
-            setShowDropDown(true);
           }
         }}
       >

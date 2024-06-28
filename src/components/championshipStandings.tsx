@@ -1,13 +1,9 @@
-import { GeneralResults } from "@/util/fetchGeneralResults";
+import { driversInfo } from "@/util/handleGeneralPageStats";
+import Image from "next/image";
+import Link from "next/link";
 
 interface Props {
-  driversInfo: {
-    driverFamilyName: string;
-    driverFirstName: string;
-    totalPoints: number;
-    lastRacePosition: number;
-    lastQualyPosition: number;
-  }[];
+  driversInfo: driversInfo;
 }
 
 export default function ChampionshipStandings({ driversInfo }: Props) {
@@ -25,24 +21,35 @@ export default function ChampionshipStandings({ driversInfo }: Props) {
       </div>
 
       <ol className=" divide-y dark:divide-gray-600 transition-colors duration-500">
-        {standings.map((driver, index) => {
-          return (
-            <li key={index} className="flex items-center justify-between p-6">
-              <div className="flex items-center gap-4">
-                <p className="text-white bg-blue-500 rounded-full w-8 h-8 flex items-center justify-center font-bold">
-                  {index + 1}
-                </p>
-                <p className="font-semibold text-gray-500 dark:text-gray-400">
-                  {driver.driverFamilyName}
-                </p>
-              </div>
+        {standings
+          .filter((driver) => driver.driverId !== "bearman")
+          .map((driver, index) => {
+            return (
+              <li key={index} className="flex items-center justify-between p-6">
+                <Link
+                  href={`/drivers/${driver?.driverId}`}
+                  className="group flex items-center gap-4"
+                >
+                  <div className=" rounded-full overflow-hidden">
+                    <Image
+                      className=" group-hover:scale-110 transition-all duration-300"
+                      width={32}
+                      height={32}
+                      src={`/imagesDrivers/${driver?.driverId}.webp`}
+                      alt=""
+                    ></Image>
+                  </div>
+                  <p className="font-semibold text-gray-500 dark:text-gray-400">
+                    {driver.driverFamilyName}
+                  </p>
+                </Link>
 
-              <p className="font-semibold text-gray-500 dark:text-gray-400">
-                {driver.totalPoints}
-              </p>
-            </li>
-          );
-        })}
+                <p className="font-semibold text-gray-500 dark:text-gray-400">
+                  {driver.totalPoints}
+                </p>
+              </li>
+            );
+          })}
       </ol>
     </div>
   );

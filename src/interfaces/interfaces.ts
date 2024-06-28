@@ -1,4 +1,8 @@
-import { ConstructorRacePoints } from "@/util/handleGeneralPageStats";
+import { Calendar } from "@/util/fetchRaceCalendar";
+import {
+  ConstructorRacePoints,
+  driversInfo,
+} from "@/util/handleGeneralPageStats";
 
 export interface DriverResults {
   id: string;
@@ -87,30 +91,41 @@ interface Source {
 }
 
 export interface GeneralStats {
-  driversInfo: {
+  driversInfo: driversInfo;
+  championshipLeader: {
+    driverId: string | undefined;
+    driverTeam: string | undefined;
     driverFamilyName: string;
     driverFirstName: string;
     totalPoints: number;
     lastRacePosition: number;
     lastQualyPosition: number;
-  }[];
-  championshipLeader:
-    | {
-        driverFamilyName: string;
-        driverFirstName: string;
-      }
-    | undefined;
-  lastRaceWinner:
-    | {
-        driverFamilyName: string;
-        driverFirstName: string;
-      }
-    | undefined;
-  lastQualyWinner:
-    | {
-        driverFamilyName: string;
-        driverFirstName: string;
-      }
-    | undefined;
+  };
+  lastRaceWinner: {
+    driverId: string | undefined;
+    driverTeam: string | undefined;
+    driverFamilyName: string;
+    driverFirstName: string;
+    totalPoints: number;
+    lastRacePosition: number;
+    lastQualyPosition: number;
+  };
+  lastQualyWinner: {
+    driverId: string | undefined;
+    driverTeam: string | undefined;
+    driverFamilyName: string;
+    driverFirstName: string;
+    totalPoints: number;
+    lastRacePosition: number;
+    lastQualyPosition: number;
+  };
   constructorChampionshipPoints: ConstructorRacePoints[];
+  nextRace: Calendar | undefined;
+  averageDriverAge: number;
+  thisRaceIndex: number | undefined;
+  numberOfRaces: number | undefined;
+  oldestDriverAge: number;
+  oldestDriverName: string;
+  youngestDriverAge: number;
+  youngestDriverName: string;
 }

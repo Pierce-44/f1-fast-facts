@@ -27,6 +27,8 @@ export default function GeneralRacePointsChat({
   driverResults.forEach((driver, index) => {
     // const result = driver?.races[0].;
 
+    if (driver?.driverId === "bearman") return;
+
     const driverFamilyName = driver?.races[0].results[0].driver.familyName;
 
     // const points = Number(result?.results[0].points || 0);
@@ -65,7 +67,7 @@ export default function GeneralRacePointsChat({
 
   const options = {
     chart: {
-      id: "basic-bar",
+      id: "general-race-points",
     },
     stroke: {
       curve: "straight",
@@ -188,7 +190,37 @@ export default function GeneralRacePointsChat({
           setShowSum(!showSum);
         }}
       >
-        {showSum ? "Data Per Race" : "Data Summed"}
+        {showSum ? "Points Per Race" : "Points Summed"}
+      </button>
+      <button
+        className="bg-[#5d87ff] text-white rounded-md px-4 py-2 ml-10 mt-8 hover:bg-[#3e66d3] transition-all text-wrap"
+        onClick={() => {
+          const chart = ApexCharts.getChartByID("general-race-points");
+          driverResults.forEach((driver) => {
+            if (driver?.driverId === "bearman") return;
+
+            const driverFamilyName =
+              driver?.races[0].results[0].driver.familyName || "";
+            chart?.hideSeries(driverFamilyName);
+          });
+        }}
+      >
+        Hide All
+      </button>
+      <button
+        className="bg-[#5d87ff] text-white rounded-md px-4 py-2 ml-10 mt-8 hover:bg-[#3e66d3] transition-all text-wrap"
+        onClick={() => {
+          const chart = ApexCharts.getChartByID("general-race-points");
+          driverResults.forEach((driver) => {
+            if (driver?.driverId === "bearman") return;
+
+            const driverFamilyName =
+              driver?.races[0].results[0].driver.familyName || "";
+            chart?.showSeries(driverFamilyName);
+          });
+        }}
+      >
+        Show All
       </button>
     </div>
   );

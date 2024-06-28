@@ -4,13 +4,14 @@ import { Autoplay } from "swiper/modules";
 import useGeneralPageSlider from "@/hooks/useGeneralSlider";
 import { DriverResults } from "@/util/fetchDriverRaceResults";
 import Image from "next/image";
+import { GeneralStats } from "@/interfaces/interfaces";
 
 interface Props {
-  driverResults: DriverResults | null;
+  stats: GeneralStats;
 }
 
-export default function GeneralPageSlider({ driverResults }: Props) {
-  const supportedSliderItems = useGeneralPageSlider(driverResults);
+export default function GeneralPageSlider({ stats }: Props) {
+  const supportedSliderItems = useGeneralPageSlider(stats);
 
   return (
     <Swiper
@@ -42,7 +43,7 @@ export default function GeneralPageSlider({ driverResults }: Props) {
                 alt={item.title}
               ></Image>
               <p className="text-sm text-center">{item.title}</p>
-              <p>{item.value}</p>
+              <p className="text-sm">{item.value || ""}</p>
             </div>
           </SwiperSlide>
         );

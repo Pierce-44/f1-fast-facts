@@ -56,24 +56,30 @@ export default function DriversDropDown({ drivers }: Props) {
 
         `}
       >
-        {drivers.map((driver, index) => {
-          return (
-            <div
-              className="h-12 p-4 flex items-center justify-center text-gray-600 dark:text-gray-400"
-              key={index}
-            >
-              <Link
-                href={`/drivers/${driver.driverId}`}
-                onClick={() => {
-                  sideBarHidden && setSideBarOpen(false);
-                }}
-                className={`${driver.driverId === params.driver ? "bg-[#eaf0ff] text-[#7296FF] dark:bg-darkOffset" : "hover:bg-[#eaf0ff] hover:text-[#7296FF] dark:hover:bg-darkOffset"}  py-2 rounded w-full text-start pl-11 transition-all`}
+        {drivers
+          .filter((driver) => driver.driverId !== "bearman")
+          .map((driver, index) => {
+            return (
+              <div
+                className="h-12 p-4 flex items-center justify-center text-gray-600 dark:text-gray-400"
+                key={index}
               >
-                {driver.familyName}
-              </Link>
-            </div>
-          );
-        })}
+                <Link
+                  href={`/drivers/${driver.driverId}`}
+                  onClick={() => {
+                    if (window && window.innerWidth < 800) {
+                      setTimeout(() => {
+                        sideBarHidden && setSideBarOpen(false);
+                      }, 1000);
+                    }
+                  }}
+                  className={`${driver.driverId === params.driver ? "bg-[#eaf0ff] text-[#7296FF] dark:bg-darkOffset" : "hover:bg-[#eaf0ff] hover:text-[#7296FF] dark:hover:bg-darkOffset"}  py-2 rounded w-full text-start pl-11 transition-all`}
+                >
+                  {driver.familyName}
+                </Link>
+              </div>
+            );
+          })}
       </div>
     </div>
   );

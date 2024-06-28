@@ -11,7 +11,7 @@ export default async function General() {
 
   const raceCalendar = await fetchRaceCalendar();
 
-  const stats = handleGeneralPageStats(generalResults);
+  const stats = handleGeneralPageStats({ generalResults, raceCalendar });
 
   return (
     <GeneralPageClient
