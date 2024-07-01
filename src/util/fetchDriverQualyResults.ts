@@ -4,7 +4,11 @@ export async function fetchDriverQualyResults(
   try {
     const response = await fetch(
       `https://f1-data-api-d7f25ebaa706.herokuapp.com/qualyfying/${driverName}/results `,
-      { cache: "no-store" }
+      {
+        headers: {
+          "Cache-Control": "no-store",
+        },
+      }
     );
 
     if (!response.ok) {
