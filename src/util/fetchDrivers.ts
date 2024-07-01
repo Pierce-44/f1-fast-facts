@@ -1,7 +1,8 @@
 export async function fetchDrivers(): Promise<Driver[]> {
   try {
     const response = await fetch(
-      "https://f1-data-api-d7f25ebaa706.herokuapp.com/drivers"
+      "https://f1-data-api-d7f25ebaa706.herokuapp.com/drivers",
+      { cache: "no-store" }
     );
 
     if (!response.ok) {
