@@ -15,7 +15,7 @@ const Chart = dynamic(() => import("react-apexcharts"), {
 export default function GeneralRacePointsChat({
   driverResults,
 }: {
-  driverResults: (DriverResults | null)[];
+  driverResults: (DriverResults[] | null)[];
 }) {
   const [darkMode] = useAtom(atoms.darkMode);
 
@@ -25,11 +25,11 @@ export default function GeneralRacePointsChat({
   const series: any[] = [];
 
   driverResults.forEach((driver, index) => {
-    // const result = driver?.races[0].;
+    // const result = driver![0]?.races[0].;
 
-    if (driver?.driverId === "bearman") return;
+    if (driver![0]?.driverId === "bearman") return;
 
-    const driverFamilyName = driver?.races[0].results[0].driver.familyName;
+    const driverFamilyName = driver![0]?.races[0].results[0].driver.familyName;
 
     // const points = Number(result?.results[0].points || 0);
     // const location = result?.circuit.circuitId || "";
@@ -45,7 +45,7 @@ export default function GeneralRacePointsChat({
 
     let pointsSum = 0;
 
-    driver?.races.forEach((race, index) => {
+    driver![0]?.races.forEach((race, index) => {
       const points = Number(race?.results[0].points || 0);
       const location = race?.circuit.circuitId || "";
 
@@ -197,10 +197,10 @@ export default function GeneralRacePointsChat({
         onClick={() => {
           const chart = ApexCharts.getChartByID("general-race-points");
           driverResults.forEach((driver) => {
-            if (driver?.driverId === "bearman") return;
+            if (driver![0]?.driverId === "bearman") return;
 
             const driverFamilyName =
-              driver?.races[0].results[0].driver.familyName || "";
+              driver![0]?.races[0].results[0].driver.familyName || "";
             chart?.hideSeries(driverFamilyName);
           });
         }}
@@ -212,10 +212,10 @@ export default function GeneralRacePointsChat({
         onClick={() => {
           const chart = ApexCharts.getChartByID("general-race-points");
           driverResults.forEach((driver) => {
-            if (driver?.driverId === "bearman") return;
+            if (driver![0]?.driverId === "bearman") return;
 
             const driverFamilyName =
-              driver?.races[0].results[0].driver.familyName || "";
+              driver![0]?.races[0].results[0].driver.familyName || "";
             chart?.showSeries(driverFamilyName);
           });
         }}

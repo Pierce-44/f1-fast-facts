@@ -1,6 +1,6 @@
 export async function fetchDriverQualyResults(
   driverName: string
-): Promise<QualyResults | null> {
+): Promise<QualyResults[] | null> {
   try {
     const response = await fetch(
       `https://f1-data-api-d7f25ebaa706.herokuapp.com/qualyfying/${driverName}/results `

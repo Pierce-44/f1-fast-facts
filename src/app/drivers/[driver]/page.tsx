@@ -10,8 +10,11 @@ export default async function Driver({
 }) {
   const driverId = params.driver.toLocaleLowerCase();
 
-  const driverResults = await fetchDriverRaceResults(driverId);
-  const driverQaulyResults = await fetchDriverQualyResults(driverId);
+  const driverResponse = await fetchDriverRaceResults(driverId);
+  const driverResults = driverResponse && driverResponse[0];
+
+  const driverQaulyResponse = await fetchDriverQualyResults(driverId);
+  const driverQaulyResults = driverQaulyResponse && driverQaulyResponse[0];
 
   const driverName = driverResults?.races[0].results[0].driver.givenName;
   const teamData = await fetchTeamData();
@@ -27,8 +30,14 @@ export default async function Driver({
     (driver) => driver.givenName !== driverName && driver.givenName !== "Oliver"
   )[0];
 
-  const teamMateResults = await fetchDriverRaceResults(teamMate.driverId);
-  const teamMateQaulyResults = await fetchDriverQualyResults(teamMate.driverId);
+  const teamMateResponse = await fetchDriverRaceResults(teamMate.driverId);
+  const teamMateResults = teamMateResponse && teamMateResponse[0];
+
+  const teamMateQaulyResponse = await fetchDriverQualyResults(
+    teamMate.driverId
+  );
+  const teamMateQaulyResults =
+    teamMateQaulyResponse && teamMateQaulyResponse[0];
 
   return (
     <DriverPageClient

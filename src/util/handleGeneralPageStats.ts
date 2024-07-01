@@ -35,25 +35,29 @@ export default function handleGeneralPageStats({
   const constructorChampionshipPoints: ConstructorRacePoints[] = [];
 
   generalResults.driverRaceResults.map((driver, index) => {
-    driver?.driverId;
+    if (!driver) return;
 
-    const totalPoints = driver?.races.reduce(
+    driver[0]?.driverId;
+
+    const totalPoints = driver[0]?.races.reduce(
       (previousValue, race) =>
         Number(previousValue) + Number(race.results[0].points),
       0
     );
 
-    const driverQualyInfo = generalResults.driverQualifyingResults[index];
+    const driverQualy = generalResults.driverQualifyingResults[index];
+    const driverQualyInfo = driverQualy && driverQualy[0];
 
     driversInfo.push({
-      driverId: driver?.driverId,
-      driverTeam: driver?.races[0].results[0].constructor.name,
-      driverFamilyName: driver?.races[0].results[0].driver.familyName || "",
-      driverFirstName: driver?.races[0].results[0].driver.givenName || "",
+      driverId: driver[0]?.driverId,
+      driverTeam: driver[0]?.races[0].results[0].constructor.name,
+      driverFamilyName: driver[0]?.races[0].results[0].driver.familyName || "",
+      driverFirstName: driver[0]?.races[0].results[0].driver.givenName || "",
       totalPoints: totalPoints || 0,
       lastRacePosition:
-        Number(driver?.races[driver?.races.length - 1].results[0].position) ||
-        22,
+        Number(
+          driver[0]?.races[driver[0]?.races.length - 1].results[0].position
+        ) || 22,
       lastQualyPosition:
         Number(
           driverQualyInfo?.races[driverQualyInfo?.races.length - 1]
@@ -61,7 +65,7 @@ export default function handleGeneralPageStats({
         ) || 22,
     });
 
-    const teamName = driver?.races[0].results[0].constructor.name || "";
+    const teamName = driver[0]?.races[0].results[0].constructor.name || "";
 
     if (
       constructorChampionshipPoints.some(
@@ -72,7 +76,7 @@ export default function handleGeneralPageStats({
         (team) => team.teamName === teamName
       );
 
-      driver?.races.forEach((race, index) => {
+      driver[0]?.races.forEach((race, index) => {
         const thisRaceName = race.circuit.circuitId;
 
         const filterRace = teamObject[0].races.filter(
@@ -91,11 +95,11 @@ export default function handleGeneralPageStats({
       });
     } else {
       const teamObject = {
-        teamName: driver?.races[0].results[0].constructor.name || "",
+        teamName: driver[0]?.races[0].results[0].constructor.name || "",
         races: [] as any,
       };
 
-      driver?.races.forEach((race) => {
+      driver[0]?.races.forEach((race) => {
         teamObject.races.push({
           raceName: race.circuit.circuitId,
           points: Number(race.results[0].points),
@@ -143,13 +147,13 @@ export default function handleGeneralPageStats({
   const numberOfRaces = raceCalendar?.length;
 
   const driverRaceResultsFiltered = generalResults.driverRaceResults.filter(
-    (driver) => driver?.driverId !== "bearman"
+    (driver) => driver && driver[0]?.driverId !== "bearman"
   );
 
   const sumOfDriversAge = driverRaceResultsFiltered.reduce(
     (previousValue, currentValue) => {
       const dateOfBirth =
-        currentValue?.races[0].results[0].driver.dateOfBirth || "";
+        currentValue![0]?.races[0].results[0].driver.dateOfBirth || "";
       const driverAge = calculateAge(dateOfBirth);
       return driverAge + previousValue;
     },
@@ -163,12 +167,12 @@ export default function handleGeneralPageStats({
   const oldestDriverAge = driverRaceResultsFiltered.reduce(
     (previousValue, currentValue) => {
       const dateOfBirth =
-        currentValue?.races[0].results[0].driver.dateOfBirth || "";
+        currentValue![0]?.races[0].results[0].driver.dateOfBirth || "";
       const driverAge = calculateAge(dateOfBirth);
 
       if (driverAge > previousValue) {
         oldestDriverName =
-          currentValue?.races[0].results[0].driver.familyName || "";
+          currentValue![0]?.races[0].results[0].driver.familyName || "";
       }
 
       return driverAge > previousValue ? driverAge : previousValue;
@@ -181,12 +185,12 @@ export default function handleGeneralPageStats({
   const youngestDriverAge = driverRaceResultsFiltered.reduce(
     (previousValue, currentValue) => {
       const dateOfBirth =
-        currentValue?.races[0].results[0].driver.dateOfBirth || "";
+        currentValue![0]?.races[0].results[0].driver.dateOfBirth || "";
       const driverAge = calculateAge(dateOfBirth);
 
       if (driverAge < previousValue) {
         youngestDriverName =
-          currentValue?.races[0].results[0].driver.familyName || "";
+          currentValue![0]?.races[0].results[0].driver.familyName || "";
       }
 
       return driverAge < previousValue ? driverAge : previousValue;

@@ -8,8 +8,8 @@ import {
 } from "./fetchDriverRaceResults";
 
 export type GeneralResults = {
-  driverRaceResults: (DriverResults | null)[];
-  driverQualifyingResults: (QualyResults | null)[];
+  driverRaceResults: (DriverResults[] | null)[];
+  driverQualifyingResults: (QualyResults[] | null)[];
 };
 
 export async function fetchGeneralResults(
