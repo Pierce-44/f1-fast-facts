@@ -3,7 +3,12 @@ export async function fetchDriverRaceResults(
 ): Promise<DriverResults[] | null> {
   try {
     const response = await fetch(
-      `https://f1-data-api-d7f25ebaa706.herokuapp.com/drivers/${driverName}/results`
+      `https://f1-data-api-d7f25ebaa706.herokuapp.com/drivers/${driverName}/results`,
+      {
+        headers: {
+          "Cache-Control": "no-store",
+        },
+      }
     );
 
     if (!response.ok) {
