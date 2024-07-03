@@ -2,7 +2,12 @@ export async function fetchForums(): Promise<Forum[]> {
   try {
     const response = await fetch(
       "https://f1-data-api-d7f25ebaa706.herokuapp.com/forums",
-      { cache: "no-store" }
+      {
+        cache: "no-store",
+        headers: {
+          "Cache-Control": "no-cache",
+        },
+      }
     );
 
     if (!response.ok) {

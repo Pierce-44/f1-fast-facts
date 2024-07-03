@@ -1,5 +1,5 @@
 "use client";
-import { Forum, Message } from "@/util/fetchForums";
+import { Forum, Message, fetchForums } from "@/util/fetchForums";
 import { useParams } from "next/navigation";
 import React from "react";
 import * as atoms from "@/util/atoms";
@@ -38,10 +38,12 @@ export default function ForumPage({ forumsArray }: Props) {
   };
 
   const handleSubmit = (event: any) => {
-    if (!user || !socketConnection) {
+    if (!user) {
       setLoginPopUp(true);
       return;
     }
+
+    if (!socketConnection) return;
 
     event.preventDefault();
 
@@ -94,9 +96,6 @@ export default function ForumPage({ forumsArray }: Props) {
     connect?.start().then(() => {
       console.log("Connected!");
       connect.on("ReceiveMessage", (forumName, messageObject) => {
-        // setMessages(prevMessages => [...prevMessages, message]);
-        console.log("Message reseived!", forumName, messageObject);
-
         if (forumPage === forumName) {
           const messageArrayCopy = [...messages];
           messageArrayCopy.push(messageObject);
@@ -121,20 +120,28 @@ export default function ForumPage({ forumsArray }: Props) {
   const scrollRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
-    const currentForum = forumsArray.filter(
-      (forum) => forum.forumName === forumPage
-    )[0];
-
-    if (!currentForum) return;
-
-    setMessages(currentForum.messages);
-  }, [forumPage]);
-
-  React.useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   }, [messages, scrollRef.current, scrollRef.current?.scrollHeight]);
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await fetchForums();
+
+        const currentForum = result.filter(
+          (forum) => forum.forumName === forumPage
+        )[0];
+
+        setMessages(currentForum.messages);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, [forumPage]);
 
   return (
     <div className="w-full ">
