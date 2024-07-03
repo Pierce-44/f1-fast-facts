@@ -87,7 +87,7 @@ export default function ForumPage({ forumsArray }: Props) {
 
   React.useEffect(() => {
     const connect = new HubConnectionBuilder()
-      .withUrl("http://localhost:5041/chathub")
+      .withUrl("https://f1-data-api-d7f25ebaa706.herokuapp.com/chathub")
       .withAutomaticReconnect()
       .build();
 

@@ -1,10 +1,13 @@
 export async function fetchForums(): Promise<Forum[]> {
   try {
-    const response = await fetch("http://localhost:5041/forums", {
-      headers: {
-        "Cache-Control": "no-store",
-      },
-    });
+    const response = await fetch(
+      "https://f1-data-api-d7f25ebaa706.herokuapp.com/forums",
+      {
+        headers: {
+          "Cache-Control": "no-store",
+        },
+      }
+    );
 
     if (!response.ok) {
       throw new Error(`Error fetching forums: ${response.statusText}`);
