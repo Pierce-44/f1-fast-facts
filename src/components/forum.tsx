@@ -132,7 +132,7 @@ export default function ForumPage({ forumsArray }: Props) {
 
   React.useEffect(() => {
     if (scrollRef.current) {
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+      scrollRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   }, [messages, scrollRef.current, scrollRef.current?.scrollHeight]);
 
@@ -165,14 +165,14 @@ export default function ForumPage({ forumsArray }: Props) {
         </p>
       </div>
 
-      <div
-        ref={scrollRef}
-        className="p-2 h-[calc(100%-151px)] overflow-y-scroll space-y-10"
-      >
+      <div className="p-2 h-[calc(100%-151px)] overflow-y-scroll space-y-10">
         {!isLoading ? (
           messages.map((message, index) => {
             return (
-              <div key={index}>
+              <div
+                ref={index === messages.length - 1 ? scrollRef : null}
+                key={index}
+              >
                 {message.username === user?.name ? (
                   <YourMessage message={message} />
                 ) : (

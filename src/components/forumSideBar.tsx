@@ -66,8 +66,6 @@ export default function ForumSideBar({ forumsArray }: Props) {
 
   React.useEffect(() => {
     if (scrollRef.current) {
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-
       scrollRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   }, [scrollRef.current]);
