@@ -172,7 +172,11 @@ export default function ForumPage({ forumsArray }: Props) {
         </p>
       </div>
 
-      <div className="p-2 h-[calc(100%-151px)] overflow-y-scroll space-y-10">
+      <div
+        className={`${forumPage ? "h-[calc(100%-165px)]" : "h-[calc(100%-85px)]"} p-2 overflow-y-scroll space-y-10`}
+      >
+        {forumPage ? <></> : <OtherUserMessage message={generalPageMessage} />}
+
         {!isLoading ? (
           messages.map((message, index) => {
             return (
@@ -206,7 +210,7 @@ export default function ForumPage({ forumsArray }: Props) {
                 Send
               </label>
               <div className="relative">
-                <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                <div className="absolute top-4 flex items-center ps-3 pointer-events-none">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 -960 960 960"
@@ -215,10 +219,9 @@ export default function ForumPage({ forumsArray }: Props) {
                     <path d="M140-190v-580l688.46 290L140-190Zm60-90 474-200-474-200v147.69L416.92-480 200-427.69V-280Zm0 0v-400 400Z" />
                   </svg>
                 </div>
-                <input
-                  type="text"
+                <textarea
                   id="default-send-forum"
-                  className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="resize-none h-[70px] block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="Send a message"
                   required
                   value={forumMessage}
@@ -292,9 +295,9 @@ function OtherUserMessage({ message }: MessageProps) {
         />
         <div className="sm:pl-4  w-full lg:w-[80%]">
           <p className="text-xs text-gray-500 font-semibold sm:pl-2 pt-2 sm:pt-0">{`${message.username}, ${returnTimeSinceMessage(message.timeStamp)}`}</p>
-          <p className=" bg-[#ebf3fe] dark:bg-darkOffset transition-all duration-500 dark:text-gray-400 sm:ml-2 mt-2 p-4 rounded-md text-gray-800 text-sm sm:text-base">
+          <pre className=" bg-[#ebf3fe] dark:bg-darkOffset transition-all duration-500 dark:text-gray-400 sm:ml-2 mt-2 p-4 rounded-md text-gray-800 text-sm sm:text-base whitespace-pre-line">
             {message.content}
-          </p>
+          </pre>
         </div>
       </div>
     </div>
@@ -306,10 +309,10 @@ function YourMessage({ message }: MessageProps) {
     <div className="p-2 sm:p-4">
       <div className="flex flex-col-reverse sm:flex-row">
         <div className="flex flex-col justify-end w-full lg:max-w-[80%] ml-auto sm:pr-6">
-          <p className="text-xs text-gray-500 font-semibold pl-2 text-right">{`Pierce, ${returnTimeSinceMessage(1719851133)}`}</p>
-          <p className=" bg-[#d0f7d4] sm:ml-2 mt-2 p-4 rounded-md text-gray-800 dark:bg-[#779c7b] dark:text-gray-800 transition-all duration-500 text-sm sm:text-base">
+          <p className="text-xs text-gray-500 font-semibold pl-2 text-right">{`Pierce, ${returnTimeSinceMessage(message.timeStamp)}`}</p>
+          <pre className=" bg-[#d0f7d4] sm:ml-2 mt-2 p-4 rounded-md text-gray-800 dark:bg-[#779c7b] dark:text-gray-800 transition-all duration-500 text-sm sm:text-base !whitespace-pre-line">
             {message.content}
-          </p>
+          </pre>
         </div>
         <img
           className="object-contain sm:h-12 sm:w-12 h-8 w-8 rounded-full"
@@ -321,3 +324,34 @@ function YourMessage({ message }: MessageProps) {
     </div>
   );
 }
+
+const generalPageMessage = {
+  id: {
+    timestamp: 0,
+    machine: 0,
+    pid: 0,
+    increment: 0,
+    creationTime: "",
+  },
+  username: "Admin - Pierce Hahn",
+  userImage:
+    "https://lh3.googleusercontent.com/a/ACg8ocIWSqRkrYfuIazGJNLBAdmgWwTtoMlsqkg1TW5SkHC7_MgqRWo=s96-c",
+  content: `Welcome to F1 Fast Facts Forum! \n
+
+Dear F1 Enthusiasts, \n
+
+Welcome to F1 Fast Facts, your dedicated forum for all things Formula 1! Whether you're a seasoned fan or new to the world of motorsport, this forum is designed to be a hub of knowledge, discussion, and community for everyone passionate about Formula 1 racing.\n
+
+As we embark on this journey together, we encourage lively and respectful discussions. Formula 1 is a sport that evokes passion and enthusiasm, and we value diverse perspectives and insights from all members of our community. Let's keep our discussions constructive and respectful of one another, ensuring a positive and enjoyable experience for everyone.\n
+
+Feel free to share your insights, discuss the latest races and news, debate race strategies, and celebrate the achievements of your favorite drivers and teams. Together, let's celebrate the excitement and technical brilliance that define Formula 1.\n
+
+Thank you for joining us at F1 Fast Facts Forum. We look forward to engaging with you and sharing our love for the world's most exhilarating motorsport!\n
+
+Best regards,\n
+
+Pierce Hahn\n
+Admin, F1 Fast Facts Forum\n
+`,
+  timeStamp: 1720016023,
+};

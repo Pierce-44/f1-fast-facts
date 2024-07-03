@@ -30,7 +30,7 @@ export default function ForumsPageClient({ forumsArray }: Props) {
       id="forum-scrolled"
     >
       <div className=" max-w-[1330px] h-full  mx-auto pt-[90px] flex flex-col px-4">
-        <div className=" bg-[#ebf3fe] px-4 py-2 mb-4 rounded-md flex items-center justify-between dark:bg-darkOffset transition-all duration-700">
+        <div className="hidden bg-[#ebf3fe] px-4 py-2 mb-4 rounded-md sm:flex items-center justify-between dark:bg-darkOffset transition-all duration-700">
           <div className="pl-4">
             <p className="text-3xl text-gray-800 mb-2 dark:text-white max-md:text-lg">
               Forums

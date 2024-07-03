@@ -79,3 +79,7 @@ input:focus {
   /* background-color: #333; */
   outline: none;
 }
+textarea:focus {
+  /* background-color: #333; */
+  outline: none;
+}
