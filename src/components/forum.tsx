@@ -20,6 +20,7 @@ export default function ForumPage({ forumsArray }: Props) {
   const forumPage = params?.forum
     ? (params.forum as any).replace(/%20/g, " ")
     : "";
+
   const [forumMessage, setForumMessage] = React.useState("");
 
   const [loginPopUp, setLoginPopUp] = React.useState(false);

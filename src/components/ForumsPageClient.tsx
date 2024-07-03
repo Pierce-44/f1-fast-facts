@@ -7,7 +7,7 @@ import useDarkMode from "@/hooks/useDarkMode";
 import { Forum } from "@/util/fetchForums";
 import Image from "next/image";
 import Forums from "./forums";
-import { useSearchParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 
 interface Props {
   forumsArray: Forum[];
@@ -18,9 +18,11 @@ export default function ForumsPageClient({ forumsArray }: Props) {
 
   useDarkMode();
 
-  const searchParams = useSearchParams();
+  const params = useParams();
 
-  const forumPage = searchParams.get("forum");
+  const forumPage = params?.forum
+    ? (params.forum as any).replace(/%20/g, " ")
+    : "";
 
   return (
     <div

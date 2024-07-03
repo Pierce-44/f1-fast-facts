@@ -1,6 +1,6 @@
 "use client";
 import { Forum } from "@/util/fetchForums";
-import { useParams, useRouter, useSearchParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import React from "react";
 import * as atoms from "@/util/atoms";
 import { useAtom } from "jotai";
