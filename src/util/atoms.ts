@@ -4,3 +4,4 @@ export const darkMode = atom(false);
 export const sideBarOpen = atom(true);
 export const driversDropDownOpen = atom(false);
 export const sideBarHidden = atom(false);
+export const openForumSideBar = atom(false);

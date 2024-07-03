@@ -17,7 +17,7 @@ export default function SideBarClient({ drivers }: Props) {
   const [, setSideBarHidden] = useAtom(atoms.sideBarHidden);
   const [, setDriversDropDownOpen] = useAtom(atoms.driversDropDownOpen);
 
-  const supportedSideBarItems = ["calendar", "news"];
+  const supportedSideBarItems = ["forums", "calendar", "news"];
 
   const wrapperRef = React.useRef<HTMLDivElement>(null);
 

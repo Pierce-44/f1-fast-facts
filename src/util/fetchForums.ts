@@ -1,0 +1,49 @@
+export async function fetchForums(): Promise<Forum[]> {
+  try {
+    const response = await fetch("http://localhost:5041/forums", {
+      headers: {
+        "Cache-Control": "no-store",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error fetching forums: ${response.statusText}`);
+    }
+
+    const forums: Forum[] = await response.json();
+
+    return forums;
+  } catch (error) {
+    console.error("Failed to fetch forums:", error);
+    return [];
+  }
+}
+export interface Forum {
+  id: Id;
+  forumName: string;
+  messages: Message[];
+}
+
+export interface Id {
+  timestamp: number;
+  machine: number;
+  pid: number;
+  increment: number;
+  creationTime: string;
+}
+
+export interface Message {
+  id: Id2;
+  username: string;
+  userImage: string;
+  content: string;
+  timeStamp: number;
+}
+
+export interface Id2 {
+  timestamp: number;
+  machine: number;
+  pid: number;
+  increment: number;
+  creationTime: string;
+}

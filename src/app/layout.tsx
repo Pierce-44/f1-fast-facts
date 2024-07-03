@@ -4,6 +4,7 @@ import "./globals.css";
 import SideBar from "../components/sideBar";
 import UpperBar from "@/components/upperBar";
 import { Providers } from "@/components/providers";
+import { UserProvider } from "@auth0/nextjs-auth0/client";
 
 const inter = Plus_Jakarta_Sans({
   weight: ["400", "500", "600", "700"],
@@ -24,13 +25,15 @@ export default function RootLayout({
     <html className="h-full" lang="en">
       <link rel="icon" href="/ufo.webp" sizes="any" />
       <Providers>
-        <body className={`${inter.className} h-full flex`}>
-          <SideBar />
-          <div className="w-full h-full">
-            <UpperBar />
-            {children}
-          </div>
-        </body>
+        <UserProvider>
+          <body className={`${inter.className} h-full flex`}>
+            <SideBar />
+            <div className="w-full h-full">
+              <UpperBar />
+              {children}
+            </div>
+          </body>
+        </UserProvider>
       </Providers>
     </html>
   );

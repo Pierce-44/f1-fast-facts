@@ -34,7 +34,6 @@ export default function DriverPageClient({
   const [sideBarHidden] = useAtom(atoms.sideBarHidden);
   useDarkMode();
 
-  console.log("check", driverResults);
   return (
     <main
       id="drivers-scrolled"
