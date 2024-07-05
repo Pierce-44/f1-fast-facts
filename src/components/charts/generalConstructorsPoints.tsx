@@ -1,12 +1,9 @@
 "use client";
-import { DriverResults } from "@/util/fetchDriverRaceResults";
-import { formatString } from "@/util/formateRaceName";
-// components/MyChart.js
+
 import dynamic from "next/dynamic";
 import React from "react";
-import * as atoms from "@/util/atoms";
-import { useAtom } from "jotai";
 import { ConstructorRacePoints } from "@/util/handleGeneralPageStats";
+import useGeneralConstructorsPoints from "@/hooks/useGeneralConstructorsPoints";
 
 // Dynamically import the chart component
 const Chart = dynamic(() => import("react-apexcharts"), {
@@ -18,124 +15,11 @@ export default function GeneralConstructorsPoints({
 }: {
   constructorChampionshipPoints: ConstructorRacePoints[];
 }) {
-  const [darkMode] = useAtom(atoms.darkMode);
-
   const [showSum, setShowSum] = React.useState(true);
 
-  const seriesSum: any[] = [];
-  const series: any[] = [];
-
-  constructorChampionshipPoints.forEach((team) => {
-    let sum = 0;
-
-    const teamDataSum = {
-      name: `${team.teamName}`,
-      data: [] as { x: string; y: number }[],
-    };
-    const teamData = {
-      name: `${team.teamName}`,
-      data: [] as { x: string; y: number }[],
-    };
-
-    team.races.forEach((race) => {
-      teamDataSum.data.push({
-        x: formatString(race.raceName),
-        y: sum + Number(race.points),
-      });
-
-      teamData.data.push({
-        x: formatString(race.raceName),
-        y: Number(race.points),
-      });
-
-      sum = sum + Number(race.points);
-    });
-
-    seriesSum.push(teamDataSum);
-    series.push(teamData);
+  const { options, series, seriesSum } = useGeneralConstructorsPoints({
+    constructorChampionshipPoints,
   });
-
-  const options = {
-    chart: {
-      id: "general-race-points-constructors",
-    },
-    stroke: {
-      curve: "straight",
-    },
-    colors: [
-      "#FF5733",
-      "#33FF57",
-      "#FF3333",
-      "#FF33A1",
-      "#A133FF",
-      "#33FFF6",
-      "#F6FF33",
-      "#FFA133",
-      "#3357FF",
-      "#33FFA5",
-    ],
-    // fill: {
-    //   type: "solid",
-    // },
-    // fill: {
-    //   colors: ["#f2f4fa", "rgba(36, 123, 160, 0.4)"], // Area colors
-    // },
-    dataLabels: {
-      enabled: false,
-    },
-    title: {
-      text: "",
-      style: {
-        fontSize: "18px",
-        color: darkMode ? "#ffffff" : "#585858",
-      },
-    },
-    subtitle: {
-      text: "Points To Date",
-      style: {
-        fontSize: "12px",
-        color: darkMode ? "#7c7c7c" : "#7c7c7c",
-      },
-    },
-    grid: {
-      show: true,
-      borderColor: "#e7e7e7",
-      strokeDashArray: 4, // Dash pattern for the background grid lines
-      padding: {
-        bottom: 40, // Adjust this value as needed for padding
-      },
-    },
-    plotOptions: {
-      bar: {
-        borderRadius: 4,
-        columnWidth: "50%",
-      },
-    },
-    yaxis: {
-      labels: {
-        style: {
-          colors: "#9b9b9b",
-          fontSize: "14px",
-        },
-      },
-    },
-    // colors: ["#5d87ff", "#00d4e3"],
-    xaxis: {
-      labels: {
-        style: {
-          colors: "#9b9b9b",
-          fontSize: "14px",
-        },
-      },
-    },
-    legend: {
-      labels: {
-        colors: darkMode ? "#7c7c7c" : "#7c7c7c",
-      },
-    },
-  };
-
-  options.title.text = `Team Constructors Points`;
 
   return (
     <div

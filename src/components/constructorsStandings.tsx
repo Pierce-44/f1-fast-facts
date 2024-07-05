@@ -1,4 +1,3 @@
-import { GeneralResults } from "@/util/fetchGeneralResults";
 import { ConstructorRacePoints } from "@/util/handleGeneralPageStats";
 
 export default function ConstructorsStandings({
@@ -6,8 +5,6 @@ export default function ConstructorsStandings({
 }: {
   constructorChampionshipPoints: ConstructorRacePoints[];
 }) {
-  // const standings = driversInfo.sort((a, b) => b.totalPoints - a.totalPoints);
-
   const teamPointsArray: { teamName: string; points: number }[] = [];
 
   constructorChampionshipPoints.forEach((team) => {

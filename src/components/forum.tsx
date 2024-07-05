@@ -1,12 +1,16 @@
 "use client";
-import { Forum, Message, fetchForums } from "@/util/fetchForums";
+import { Forum, Message } from "@/util/fetchForums";
 import { useParams } from "next/navigation";
 import React from "react";
 import * as atoms from "@/util/atoms";
 import { useAtom } from "jotai";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import LoginPopUp from "./loginPopUp";
-import { HubConnection, HubConnectionBuilder } from "@microsoft/signalr";
+import useForumResize from "@/hooks/useForumResize";
+import useWebSocketHub from "@/hooks/useWebSocketHub";
+import useForumData from "@/hooks/useForumData";
+import returnTimeSinceMessage from "@/util/returnTimeSinceMessage";
+import returnGeneralPageMessage from "@/util/returnGeneralPageMessage";
 
 interface Props {
   forumsArray: Forum[];
@@ -25,123 +29,21 @@ export default function ForumPage({ forumsArray }: Props) {
 
   const [loginPopUp, setLoginPopUp] = React.useState(false);
 
-  const [socketConnection, setSocketConnection] =
-    React.useState<HubConnection>();
-
-  const handleInputChange = (event: any) => {
-    if (!user) {
-      setLoginPopUp(true);
-      return;
-    }
-
-    setForumMessage(event.target.value);
-  };
-
-  const handleSubmit = (event: any) => {
-    if (!user) {
-      setLoginPopUp(true);
-      return;
-    }
-
-    if (!socketConnection) return;
-
-    event.preventDefault();
-
-    const forumName = forumPage;
-    const userName = user.name;
-    const userImage = user.picture;
-    const timestamp = Math.floor(new Date().getTime() / 1000);
-
-    socketConnection
-      .invoke(
-        "SendMessage",
-        forumName,
-        userName,
-        userImage,
-        forumMessage,
-        timestamp
-      )
-      .catch(function (err) {
-        return console.error(err.toString());
-      });
-  };
-
-  const [showMenuButton, setShowMenuButton] = React.useState(false);
-
-  const handleResize = () => {
-    if (window && window?.innerWidth <= 1080) {
-      setShowMenuButton(true);
-    } else {
-      setShowMenuButton(false);
-    }
-  };
-
-  React.useEffect(() => {
-    window.addEventListener("resize", handleResize);
-
-    handleResize();
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
   const [, setOpenForumSideBar] = useAtom(atoms.openForumSideBar);
-
-  React.useEffect(() => {
-    const connect = new HubConnectionBuilder()
-      .withUrl("https://f1-data-api-d7f25ebaa706.herokuapp.com/chathub")
-      .withAutomaticReconnect()
-      .build();
-
-    connect?.start().then(() => {
-      console.log("Connected!");
-      connect.on("ReceiveMessage", (forumName, messageObject) => {
-        if (forumPage === forumName) {
-          const messageArrayCopy = [...messages];
-          messageArrayCopy.push(messageObject);
-          setMessages((prev) => {
-            const copy = [...prev];
-            copy.push(messageObject);
-
-            return copy;
-          });
-        }
-      });
-      setSocketConnection(connect);
-    });
-
-    return () => {
-      connect.stop();
-    };
-  }, []);
 
   const [messages, setMessages] = React.useState<Message[]>([]);
 
+  const { socketConnection } = useWebSocketHub({
+    forumPage,
+    setMessages,
+    messages,
+  });
+
+  const { showMenuButton } = useForumResize();
+
   const scrollRef = React.useRef<HTMLDivElement>(null);
 
-  React.useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  }, [messages, scrollRef.current, scrollRef.current?.scrollHeight]);
-
-  React.useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const result = await fetchForums();
-
-        const currentForum = result.filter(
-          (forum) => forum.forumName === forumPage
-        )[0];
-
-        setMessages(currentForum.messages);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, [forumPage]);
+  useForumData({ forumPage, setMessages });
 
   return (
     <div className="w-full ">
@@ -175,7 +77,11 @@ export default function ForumPage({ forumsArray }: Props) {
       <div
         className={`${forumPage ? "h-[calc(100%-165px)]" : "h-[calc(100%-85px)]"} p-2 overflow-y-scroll space-y-10`}
       >
-        {forumPage ? <></> : <OtherUserMessage message={generalPageMessage} />}
+        {forumPage ? (
+          <></>
+        ) : (
+          <OtherUserMessage message={returnGeneralPageMessage()} />
+        )}
 
         {!isLoading ? (
           messages.map((message, index) => {
@@ -202,7 +108,37 @@ export default function ForumPage({ forumsArray }: Props) {
       ) : (
         <div className="bg-white dark:bg-dark transition-all duration-500">
           <div className="p-2 mb-2 w-full">
-            <form onSubmit={handleSubmit} className="mx-auto">
+            <form
+              onSubmit={(event: any) => {
+                if (!user) {
+                  setLoginPopUp(true);
+                  return;
+                }
+
+                if (!socketConnection) return;
+
+                event.preventDefault();
+
+                const forumName = forumPage;
+                const userName = user.name;
+                const userImage = user.picture;
+                const timestamp = Math.floor(new Date().getTime() / 1000);
+
+                socketConnection
+                  .invoke(
+                    "SendMessage",
+                    forumName,
+                    userName,
+                    userImage,
+                    forumMessage,
+                    timestamp
+                  )
+                  .catch(function (err) {
+                    return console.error(err.toString());
+                  });
+              }}
+              className="mx-auto"
+            >
               <label
                 // for="default-search"
                 className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
@@ -225,7 +161,14 @@ export default function ForumPage({ forumsArray }: Props) {
                   placeholder="Send a message"
                   required
                   value={forumMessage}
-                  onChange={handleInputChange}
+                  onChange={(event) => {
+                    if (!user) {
+                      setLoginPopUp(true);
+                      return;
+                    }
+
+                    setForumMessage(event.target.value);
+                  }}
                   autoComplete="off"
                 />
                 <button
@@ -241,42 +184,6 @@ export default function ForumPage({ forumsArray }: Props) {
       )}
     </div>
   );
-}
-
-function returnTimeSinceMessage(timestamp: number) {
-  // Convert the given timestamp to milliseconds
-  const timestampInMs = timestamp * 1000;
-
-  // Create a Date object using the timestamp in milliseconds
-  const date = new Date(timestampInMs);
-
-  // Array of month names
-  const monthNames = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
-  ];
-
-  // Extract and format the day, month, year, and time
-  const day = String(date.getDate()).padStart(2, "0");
-  const month = monthNames[date.getMonth()]; // Get month name from array
-  const year = date.getFullYear();
-  const hours = String(date.getHours()).padStart(2, "0");
-  const minutes = String(date.getMinutes()).padStart(2, "0");
-
-  // Combine date and time into the desired format
-  const formattedDate = `${day} ${month} ${year}, ${hours}:${minutes}`;
-
-  return formattedDate;
 }
 
 interface MessageProps {
@@ -324,34 +231,3 @@ function YourMessage({ message }: MessageProps) {
     </div>
   );
 }
-
-const generalPageMessage = {
-  id: {
-    timestamp: 0,
-    machine: 0,
-    pid: 0,
-    increment: 0,
-    creationTime: "",
-  },
-  username: "Admin - Pierce Hahn",
-  userImage:
-    "https://lh3.googleusercontent.com/a/ACg8ocIWSqRkrYfuIazGJNLBAdmgWwTtoMlsqkg1TW5SkHC7_MgqRWo=s96-c",
-  content: `Welcome to F1 Fast Facts Forum! \n
-
-Dear F1 Enthusiasts, \n
-
-Welcome to F1 Fast Facts, your dedicated forum for all things Formula 1! Whether you're a seasoned fan or new to the world of motorsport, this forum is designed to be a hub of knowledge, discussion, and community for everyone passionate about Formula 1 racing.\n
-
-As we embark on this journey together, we encourage lively and respectful discussions. Formula 1 is a sport that evokes passion and enthusiasm, and we value diverse perspectives and insights from all members of our community. Let's keep our discussions constructive and respectful of one another, ensuring a positive and enjoyable experience for everyone.\n
-
-Feel free to share your insights, discuss the latest races and news, debate race strategies, and celebrate the achievements of your favorite drivers and teams. Together, let's celebrate the excitement and technical brilliance that define Formula 1.\n
-
-Thank you for joining us at F1 Fast Facts Forum. We look forward to engaging with you and sharing our love for the world's most exhilarating motorsport!\n
-
-Best regards,\n
-
-Pierce Hahn\n
-Admin, F1 Fast Facts Forum\n
-`,
-  timeStamp: 1720016023,
-};
