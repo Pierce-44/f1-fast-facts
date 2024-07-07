@@ -15,6 +15,7 @@ import { useAtom } from "jotai";
 import useDarkMode from "@/hooks/useDarkMode";
 import Image from "next/image";
 import Link from "next/link";
+import React from "react";
 
 interface Props {
   driverResults: DriverResults | null;
@@ -32,6 +33,7 @@ export default function DriverPageClient({
   const [sideBarOpen] = useAtom(atoms.sideBarOpen);
   const [darkMode] = useAtom(atoms.darkMode);
   const [sideBarHidden] = useAtom(atoms.sideBarHidden);
+
   useDarkMode();
 
   return (

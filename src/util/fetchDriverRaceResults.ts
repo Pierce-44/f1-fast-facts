@@ -5,8 +5,10 @@ export async function fetchDriverRaceResults(
     const response = await fetch(
       `https://f1-data-api-d7f25ebaa706.herokuapp.com/drivers/${driverName}/results`,
       {
+        method: "GET",
+        cache: "no-store",
         headers: {
-          "Cache-Control": "no-store",
+          "Cache-Control": "no-cache",
         },
       }
     );
