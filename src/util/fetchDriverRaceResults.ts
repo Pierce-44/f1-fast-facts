@@ -4,13 +4,7 @@ export async function fetchDriverRaceResults(
   try {
     const response = await fetch(
       `https://f1-data-api-d7f25ebaa706.herokuapp.com/drivers/${driverName}/results`,
-      {
-        method: "GET",
-        cache: "no-store",
-        headers: {
-          "Cache-Control": "no-cache",
-        },
-      }
+      { next: { revalidate: 0 } }
     );
 
     if (!response.ok) {
